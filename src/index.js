@@ -6,6 +6,8 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import history from './context/History';
 
+require('dotenv').config();
+
 ReactDOM.render(
     <Router history={history}>
         <App />

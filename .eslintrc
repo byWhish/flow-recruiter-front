@@ -17,6 +17,7 @@
         "lines-between-class-members": "off",
         "no-shadow": "off",
         "no-param-reassign": ["error", { "props": false }],
+        "object-curly-newline": "off",
 //        "react/jsx-one-expression-per-line": ["warning", { "allow": "single-child" }],
         "import/no-named-as-default": "off",
         "react/destructuring-assignment": ["error", "always", { "ignoreClassFields": true }],
