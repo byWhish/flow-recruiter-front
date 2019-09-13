@@ -2,6 +2,10 @@
   "name": "flow-recruiter-front",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": "11.14.0",
+    "npm": "6.11.0"
+  },
   "dependencies": {
     "@craco/craco": "^5.4.0",
     "@material-ui/core": "^4.4.1",
