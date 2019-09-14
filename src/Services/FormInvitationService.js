@@ -14,6 +14,18 @@ class FormInvitationService {
             .then(response => response.data)
             .catch(error => Logger.of('inviteCandidates').error('error:', error));
     }
+
+    static sendForm = (id) => {
+        const endpoint = 'http://localhost:8080/api/private/form/completed';
+
+        const data = {
+            id,
+        };
+
+        return axios.post(endpoint, data)
+            .then(response => response.data)
+            .catch(error => Logger.of('sendForm').error('error:', error));
+    }
 }
 
 export default FormInvitationService;

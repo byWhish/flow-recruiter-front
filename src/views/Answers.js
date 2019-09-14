@@ -9,16 +9,16 @@ import FormInvitationService from '../Services/FormInvitationService';
 const Candidates = () => {
     const [candidates, setCandidates] = useState([]);
 
-    const fetchCandidates = useCallback(() => {
-        CandidateService.fetchCandidates()
+    const fetchAnswers = useCallback(() => {
+        CandidateService.fetchAnswers()
             .then((result) => {
                 setCandidates(result);
             });
     }, []);
 
     useEffect(() => {
-        fetchCandidates();
-    }, [fetchCandidates]);
+        fetchAnswers();
+    }, [fetchAnswers]);
 
     const useStyles = makeStyles(theme => ({
         button: {
@@ -35,9 +35,11 @@ const Candidates = () => {
 
     const classes = useStyles();
 
+    const items = candidates.map(candidates => candidates.candidate);
+
     return (
         <div className={styles.candidates}>
-            <PaginatedTable candidates={candidates} />
+            <PaginatedTable candidates={items} />
             <Button variant="contained" color="primary" className={classes.button} onClick={handleSendClick}>
                 Enviar email
             </Button>
