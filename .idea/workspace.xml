@@ -2,23 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b2fb2eb8-286c-461c-8d49-00a9fe0b78e2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/components/uikit/UIkit.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/Answers.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/Answers.module.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/Form.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/Form.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.babelrc" beforeDir="false" afterPath="$PROJECT_DIR$/.babelrc" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Services/AppointmentService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/AppointmentService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Services/CandidateService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/CandidateService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Services/FormInvitationService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/FormInvitationService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/Candidates.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Candidates.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/Candidates.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Candidates.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/Confirm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Confirm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/uikit/UIkit.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/uikit/UIkit.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/Form.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Form.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/Form.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Form.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -102,7 +89,8 @@
       <workItem from="1568167697990" duration="12522000" />
       <workItem from="1568339829832" duration="6387000" />
       <workItem from="1568418926830" duration="15150000" />
-      <workItem from="1568483166061" duration="621000" />
+      <workItem from="1568483166061" duration="2404000" />
+      <workItem from="1568540098430" duration="1289000" />
     </task>
     <servers />
   </component>
