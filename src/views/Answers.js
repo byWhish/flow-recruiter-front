@@ -1,10 +1,26 @@
-import React, { useState, useCallback, useEffect } from 'react';
-import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core/styles';
+import React, { useCallback, useEffect, useState } from 'react';
 import styles from './Candidates.module.css';
 import CandidateService from '../Services/CandidateService';
 import PaginatedTable from '../components/table/PaginatedTable';
 import FormInvitationService from '../Services/FormInvitationService';
+import { ButtonMaterial } from '../components/uikit/UIkit';
+
+const columns = [
+    {
+        id: 'id',
+        label: 'id',
+        minWidth: 120,
+        align: 'left',
+        format: value => value.toLocaleString(),
+    },
+    {
+        id: 'email',
+        label: 'email',
+        minWidth: 120,
+        align: 'left',
+        format: value => value.toFixed(2),
+    },
+];
 
 const Candidates = () => {
     const [candidates, setCandidates] = useState([]);
@@ -20,29 +36,16 @@ const Candidates = () => {
         fetchAnswers();
     }, [fetchAnswers]);
 
-    const useStyles = makeStyles(theme => ({
-        button: {
-            margin: theme.spacing(1),
-        },
-        input: {
-            display: 'none',
-        },
-    }));
-
     const handleSendClick = () => {
         FormInvitationService.inviteCandidates(candidates).then(() => alert('Ok'));
     };
-
-    const classes = useStyles();
 
     const items = candidates.map(candidates => candidates.candidate);
 
     return (
         <div className={styles.candidates}>
-            <PaginatedTable candidates={items} />
-            <Button variant="contained" color="primary" className={classes.button} onClick={handleSendClick}>
-                Enviar email
-            </Button>
+            <PaginatedTable candidates={items} columns={columns} />
+            <ButtonMaterial onClick={handleSendClick} caption="Enviar email" />
         </div>
     );
 };

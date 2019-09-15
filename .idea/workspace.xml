@@ -3,9 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="b2fb2eb8-286c-461c-8d49-00a9fe0b78e2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/uikit/UIkit.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/uikit/UIkit.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/Form.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Form.module.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/Form.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Form.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/table/PaginatedTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/table/PaginatedTable.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/Candidates.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Candidates.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -90,7 +89,7 @@
       <workItem from="1568339829832" duration="6387000" />
       <workItem from="1568418926830" duration="15150000" />
       <workItem from="1568483166061" duration="2404000" />
-      <workItem from="1568540098430" duration="1289000" />
+      <workItem from="1568540098430" duration="2093000" />
     </task>
     <servers />
   </component>
