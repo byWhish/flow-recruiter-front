@@ -6,6 +6,12 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+    KeyboardTimePicker,
+    KeyboardDatePicker,
+    MuiPickersUtilsProvider
+} from '@material-ui/pickers';
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -23,6 +29,7 @@ const useStyles = makeStyles(theme => ({
     },
     button: {
         margin: theme.spacing(1),
+        width: 200,
     },
 }));
 
@@ -35,7 +42,7 @@ export const ButtonMaterial = ({ onClick, caption }) => {
     );
 };
 
-export const InputMaterial = ({ onChange, value, label, id }) => {
+export const InputMaterial = ({ onChange, value, label, id, field, multiline, rowsMax }) => {
     const classes = useStyles();
     return (
         <TextField
@@ -43,8 +50,10 @@ export const InputMaterial = ({ onChange, value, label, id }) => {
             label={label}
             className={classes.textField}
             value={value}
-            onChange={onChange}
+            onChange={onChange(field)}
             margin="normal"
+            multiline={multiline}
+            rowsMax={rowsMax}
         />
     );
 };
@@ -67,3 +76,42 @@ export const SelectMaterial = ({ label, value, onChange, inputProps, items }) =>
         </FormControl>
     );
 };
+
+export const DateMaterial = ({ value, onChange, field }) => {
+    const classes = useStyles();
+    return (
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <KeyboardDatePicker
+                margin="normal"
+                id="date-picker-dialog"
+                label="Date picker dialog"
+                format="dd/MM/yyyy"
+                value={value}
+                onChange={onChange(field)}
+                className={classes.textField}
+                KeyboardButtonProps={{
+                    'aria-label': 'change date',
+                }}
+            />
+        </MuiPickersUtilsProvider>
+    );
+};
+
+export const TimeMaterial = ({ value, onChange, field }) => {
+    const classes = useStyles();
+    return (
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <KeyboardTimePicker
+                margin="normal"
+                id="time-picker"
+                label="Time picker"
+                value={value}
+                className={classes.textField}
+                onChange={onChange(field)}
+                KeyboardButtonProps={{
+                    'aria-label': 'change time',
+                }}
+            />
+        </MuiPickersUtilsProvider>
+    );
+}

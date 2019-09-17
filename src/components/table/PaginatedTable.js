@@ -7,6 +7,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
+import Checkbox from '@material-ui/core/Checkbox';
 
 const useStyles = makeStyles({
     root: {
@@ -23,13 +24,17 @@ export default function PaginatedTable({ candidates, columns }) {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
-    function handleChangePage(event, newPage) {
+    const handleChangePage = (event, newPage) => {
         setPage(newPage);
-    }
+    };
 
-    function handleChangeRowsPerPage(event) {
+    const handleChangeRowsPerPage = (event) => {
         setRowsPerPage(+event.target.value);
         setPage(0);
+    };
+
+    const handleRowClick = () => {
+
     }
 
     return (
@@ -37,7 +42,13 @@ export default function PaginatedTable({ candidates, columns }) {
             <div className={classes.tableWrapper}>
                 <Table stickyHeader>
                     <TableHead>
-                        <TableRow>
+                        <TableRow onClick={handleRowClick}>
+                            <TableCell>
+                                <Checkbox
+                                    checked={false}
+                                    inputProps={{ 'aria-labelledby': 'labelId' }}
+                                />
+                            </TableCell>
                             {columns.map(column => (
                                 <TableCell
                                     key={column.id}
@@ -52,6 +63,12 @@ export default function PaginatedTable({ candidates, columns }) {
                     <TableBody>
                         {candidates.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => (
                             <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                                <TableCell>
+                                    <Checkbox
+                                        checked={false}
+                                        inputProps={{ 'aria-labelledby': 'labelId' }}
+                                    />
+                                </TableCell>
                                 {columns.map((column) => {
                                     const value = row[column.id];
                                     return (

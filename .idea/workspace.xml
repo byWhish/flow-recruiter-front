@@ -2,9 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b2fb2eb8-286c-461c-8d49-00a9fe0b78e2" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/views/Project.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/views/Project.module.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/table/PaginatedTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/table/PaginatedTable.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/Candidates.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Candidates.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/uikit/UIkit.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/uikit/UIkit.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -44,6 +49,7 @@
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="settings.javascript.linters.eslint" />
+    <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -89,7 +95,7 @@
       <workItem from="1568339829832" duration="6387000" />
       <workItem from="1568418926830" duration="15150000" />
       <workItem from="1568483166061" duration="2404000" />
-      <workItem from="1568540098430" duration="2093000" />
+      <workItem from="1568540098430" duration="15267000" />
     </task>
     <servers />
   </component>

@@ -8,6 +8,7 @@ import Candidates from './views/Candidates';
 import Error404 from './views/Error404';
 import Form from './views/Form';
 import Answers from './views/Answers';
+import Project from "./views/Project";
 
 const App = () => (
     <div className="App">
@@ -17,6 +18,7 @@ const App = () => (
             <Route exact path="/confirm" component={Confirm} />
             <Route exact path="/candidates" component={Candidates} />
             <Route exact path="/answers" component={Answers} />
+            <Route exact path="/projects" component={Project} />
             <Route component={Error404} />
         </Switch>
     </div>
