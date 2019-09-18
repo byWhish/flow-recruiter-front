@@ -11,7 +11,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 
 const useStyles = makeStyles({
     root: {
-        width: '100%',
+        width: '60%',
     },
     tableWrapper: {
         maxHeight: 407,
@@ -19,7 +19,44 @@ const useStyles = makeStyles({
     },
 });
 
-export default function PaginatedTable({ candidates, columns }) {
+export const SimpleTable = ({ rows, columns }) => {
+    const classes = useStyles();
+    return (
+        <Paper className={classes.root}>
+            <Table className={classes.table}>
+                <TableHead>
+                    <TableRow>
+                        {columns.map(column => (
+                            <TableCell
+                                key={column.id}
+                                align={column.align}
+                                style={{ minWidth: column.minWidth }}
+                            >
+                                {column.label}
+                            </TableCell>
+                        ))}
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {rows.map(row => (
+                        <TableRow key={row.id}>
+                            {columns.map((column) => {
+                                const value = row[column.id];
+                                return (
+                                    <TableCell key={column.id} align={column.align}>
+                                        {column.format && (value instanceof Array || value instanceof Date) ? column.format(value) : value}
+                                    </TableCell>
+                                );
+                            })}
+                        </TableRow>
+                    ))}
+                </TableBody>
+            </Table>
+        </Paper>
+    );
+};
+
+export const PaginatedTable = ({ candidates, columns }) => {
     const classes = useStyles();
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -35,7 +72,7 @@ export default function PaginatedTable({ candidates, columns }) {
 
     const handleRowClick = () => {
 
-    }
+    };
 
     return (
         <Paper className={classes.root}>
@@ -99,4 +136,4 @@ export default function PaginatedTable({ candidates, columns }) {
             />
         </Paper>
     );
-}
+};

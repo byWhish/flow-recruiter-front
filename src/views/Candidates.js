@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import styles from './Candidates.module.css';
 import CandidateService from '../Services/CandidateService';
-import PaginatedTable from '../components/table/PaginatedTable';
+import { PaginatedTable } from '../components/table/Tables';
 import FormInvitationService from '../Services/FormInvitationService';
 import { ButtonMaterial } from '../components/uikit/UIkit';
 

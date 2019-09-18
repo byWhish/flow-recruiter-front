@@ -10,8 +10,10 @@ import DateFnsUtils from '@date-io/date-fns';
 import {
     KeyboardTimePicker,
     KeyboardDatePicker,
-    MuiPickersUtilsProvider
+    MuiPickersUtilsProvider,
 } from '@material-ui/pickers';
+import withStyles from '@material-ui/core/styles/withStyles';
+import Slider from '@material-ui/core/Slider';
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -25,7 +27,7 @@ const useStyles = makeStyles(theme => ({
     },
     formControl: {
         margin: theme.spacing(1),
-        minWidth: 200,
+        width: 200,
     },
     button: {
         margin: theme.spacing(1),
@@ -58,18 +60,14 @@ export const InputMaterial = ({ onChange, value, label, id, field, multiline, ro
     );
 };
 
-export const SelectMaterial = ({ label, value, onChange, inputProps, items }) => {
+export const SelectMaterial = ({ label, value, onChange, items, field }) => {
     const classes = useStyles();
     return (
         <FormControl className={classes.formControl}>
             <InputLabel htmlFor="age-simple">{label}</InputLabel>
             <Select
                 value={value}
-                onChange={onChange}
-                inputProps={{
-                    name: inputProps.name,
-                    id: inputProps.id,
-                }}
+                onChange={onChange(field)}
             >
                 { items.map(item => <MenuItem value={item.value}>{item.label}</MenuItem>) }
             </Select>
@@ -114,4 +112,47 @@ export const TimeMaterial = ({ value, onChange, field }) => {
             />
         </MuiPickersUtilsProvider>
     );
-}
+};
+
+const PrettoSlider = withStyles({
+    root: {
+        color: '#52af77',
+        height: 8,
+        width: 500,
+    },
+    thumb: {
+        height: 24,
+        width: 24,
+        backgroundColor: '#fff',
+        border: '2px solid currentColor',
+        marginTop: -8,
+        marginLeft: -12,
+        '&:focus,&:hover,&$active': {
+            boxShadow: 'inherit',
+        },
+    },
+    active: {},
+    valueLabel: {
+        left: 'calc(-50% + 4px)',
+    },
+    track: {
+        height: 8,
+        borderRadius: 4,
+    },
+    rail: {
+        height: 8,
+        borderRadius: 4,
+    },
+})(Slider);
+
+export const TimeSlider = ({ field, value, onChange }) => (
+    <PrettoSlider
+        min={9}
+        max={18}
+        valueLabelDisplay="auto"
+        aria-label="pretto slider"
+        value={value}
+        step={1}
+        onChange={onChange(field)}
+    />
+);

@@ -2,14 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b2fb2eb8-286c-461c-8d49-00a9fe0b78e2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/views/Project.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/Project.module.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/table/PaginatedTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/table/PaginatedTable.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/table/PaginatedTable.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/table/Tables.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/uikit/UIkit.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/uikit/UIkit.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/Answers.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Answers.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/Candidates.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Candidates.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/Project.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Project.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -34,7 +32,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="js.linters.configure.manually.selectedeslint" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/views" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../flow-logger" />
     <property name="list.type.of.created.stylesheet" value="PostCSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.standard" value="true" />
@@ -95,7 +93,8 @@
       <workItem from="1568339829832" duration="6387000" />
       <workItem from="1568418926830" duration="15150000" />
       <workItem from="1568483166061" duration="2404000" />
-      <workItem from="1568540098430" duration="15267000" />
+      <workItem from="1568540098430" duration="17064000" />
+      <workItem from="1568719181530" duration="11864000" />
     </task>
     <servers />
   </component>
