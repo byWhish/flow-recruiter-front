@@ -19,7 +19,7 @@ const useStyles = makeStyles({
     },
 });
 
-export const SimpleTable = ({ rows, columns }) => {
+export const SimpleTable = ({ rows, columns, removeAction }) => {
     const classes = useStyles();
     return (
         <Paper className={classes.root}>
@@ -48,6 +48,7 @@ export const SimpleTable = ({ rows, columns }) => {
                                     </TableCell>
                                 );
                             })}
+                            <TableCell key="borrar"><div onClick={removeAction(row.id)}>Borrar</div></TableCell>
                         </TableRow>
                     ))}
                 </TableBody>

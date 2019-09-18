@@ -36,7 +36,9 @@
         "no-only-tests/no-only-tests": "error",
         "import/no-extraneous-dependencies": ["error", {"devDependencies": ["./config-overrides.js", "src/**/*.spec.js"]}],
         "import/no-cycle": "off",
-        "no-underscore-dangle": "off"
+        "no-underscore-dangle": "off",
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "warn"
     },
     "globals": {
         "localStorage": true,
@@ -56,6 +58,6 @@
         "logsControlForTest": true
     },
     "plugins": [
-        "no-only-tests"
+        "no-only-tests", "react-hooks"
     ]
 }

@@ -1,4 +1,5 @@
 import React, { useCallback, useReducer } from 'react';
+import nanoid from 'nanoid';
 import styles from './Project.module.css';
 import { ButtonMaterial, DateMaterial, InputMaterial, SelectMaterial, TimeSlider } from '../components/uikit/UIkit';
 import { SimpleTable } from '../components/table/Tables';
@@ -21,6 +22,12 @@ const durations = [
 ];
 
 const columns = [
+    {
+        id: 'id',
+        label: 'id',
+        minWidth: 120,
+        align: 'left',
+    },
     {
         id: 'date',
         label: 'date',
@@ -50,7 +57,7 @@ const arrayReducer = (state, action) => {
     const proxyState = [...state];
     switch (action.type) {
         case 'add':
-            proxyState.push(action.value);
+            proxyState.push({ ...action.value, id: nanoid(8) });
             return proxyState;
         case 'remove':
             return proxyState.filter(item => item.id !== action.id);
@@ -82,6 +89,10 @@ const Project = () => {
 
     const handleAddScheduleClick = useCallback(() => {
         dispatchList({ type: 'add', value: schedule });
+    }, [schedule]);
+
+    const handleRemoveScheduleClick = useCallback(id => () => {
+        dispatchList({ type: 'remove', id });
     }, []);
 
     return (
@@ -93,7 +104,7 @@ const Project = () => {
                 <TimeSlider value={schedule.timeRange} onChange={onChangeSchedule} field="timeRange" />
                 <SelectMaterial value={schedule.duration} onChange={onChangeSchedule} label="Duracion" items={durations} field="duration" />
                 <ButtonMaterial caption="Agregar" onClick={handleAddScheduleClick} />
-                <SimpleTable columns={columns} rows={list} />
+                <SimpleTable columns={columns} rows={list} removeAction={handleRemoveScheduleClick} />
                 <ButtonMaterial caption="Crear proyecto" onClick={handleCreateClick} />
             </div>
         </div>

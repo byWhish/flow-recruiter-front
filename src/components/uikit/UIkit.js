@@ -69,7 +69,7 @@ export const SelectMaterial = ({ label, value, onChange, items, field }) => {
                 value={value}
                 onChange={onChange(field)}
             >
-                { items.map(item => <MenuItem value={item.value}>{item.label}</MenuItem>) }
+                { items.map(item => <MenuItem key={item.value} value={item.value}>{item.label}</MenuItem>) }
             </Select>
         </FormControl>
     );
@@ -150,7 +150,7 @@ export const TimeSlider = ({ field, value, onChange }) => (
         min={9}
         max={18}
         valueLabelDisplay="auto"
-        aria-label="pretto slider"
+        // aria-label="pretto slider"
         value={value}
         step={1}
         onChange={onChange(field)}
