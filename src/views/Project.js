@@ -3,9 +3,10 @@ import nanoid from 'nanoid';
 import styles from './Project.module.css';
 import { ButtonMaterial, DateMaterial, InputMaterial, SelectMaterial, TimeSlider } from '../components/uikit/UIkit';
 import { SimpleTable } from '../components/table/Tables';
+import { ProjectService } from '../Services/ProjectService';
 
 const initialState = {
-    title: '',
+    name: '',
     description: '',
 };
 
@@ -25,27 +26,27 @@ const columns = [
     {
         id: 'id',
         label: 'id',
-        minWidth: 120,
+        minWidth: 40,
         align: 'left',
     },
     {
         id: 'date',
         label: 'date',
-        minWidth: 120,
+        minWidth: 130,
         align: 'left',
         format: value => value.toLocaleString(),
     },
     {
         id: 'timeRange',
         label: 'timeRange',
-        minWidth: 120,
+        minWidth: 50,
         align: 'left',
         format: value => `${value[0]} a ${value[1]}`,
     },
     {
         id: 'duration',
         label: 'duration',
-        minWidth: 120,
+        minWidth: 50,
         align: 'left',
         format: value => value.toLocaleString(),
     },
@@ -84,8 +85,8 @@ const Project = () => {
     }, []);
 
     const handleCreateClick = useCallback(() => {
-        // console.log('hola', state);
-    }, []);
+        ProjectService.postProject({ project: state, schedulesList: list });
+    }, [list, state]);
 
     const handleAddScheduleClick = useCallback(() => {
         dispatchList({ type: 'add', value: schedule });
@@ -98,7 +99,7 @@ const Project = () => {
     return (
         <div className={styles.project}>
             <div className={styles.formWrapper}>
-                <InputMaterial value={state.title} label="Titulo" onChange={onChange} field="title" id="title" />
+                <InputMaterial value={state.title} label="Titulo" onChange={onChange} field="name" id="name" />
                 <InputMaterial value={state.description} label="Descripcion" onChange={onChange} field="description" id="description" multiline rowsMax="4" />
                 <DateMaterial value={schedule.initDate} onChange={onDateTimeChange} field="initDate" />
                 <TimeSlider value={schedule.timeRange} onChange={onChangeSchedule} field="timeRange" />

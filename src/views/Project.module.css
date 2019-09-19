@@ -1,4 +1,16 @@
+.project {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+
 .formWrapper {
     display: flex;
     flex-direction: column;
+    width: 600px;
+    align-items: center;
 }
+
+

@@ -1,31 +1,36 @@
 import axios from 'axios';
 import Logger from '../context/Logger';
 
-class FormInvitationService {
-    static inviteCandidates = (candidates) => {
-        const endpoint = 'http://localhost:8080/api/private/mail/invite';
+const inviteCandidates = (candidates) => {
+    const endpoint = 'http://localhost:8080/api/private/mail/invite';
 
-        const data = {
-            recruitmentId: 1,
-            candidates,
-        };
+    const data = {
+        recruitmentId: 1,
+        candidates,
+    };
 
-        return axios.post(endpoint, data)
-            .then(response => response.data)
-            .catch(error => Logger.of('inviteCandidates').error('error:', error));
-    }
+    return axios.post(endpoint, data)
+        .then(response => response.data)
+        .catch(error => Logger.of('inviteCandidates').error('error:', error));
+};
 
-    static sendForm = (id) => {
-        const endpoint = 'http://localhost:8080/api/private/form/completed';
+const sendForm = (id) => {
+    const endpoint = 'http://localhost:8080/api/private/form/completed';
 
-        const data = {
-            id,
-        };
+    const data = {
+        id,
+    };
 
-        return axios.post(endpoint, data)
-            .then(response => response.data)
-            .catch(error => Logger.of('sendForm').error('error:', error));
-    }
-}
+    return axios.post(endpoint, data)
+        .then(response => response.data)
+        .catch(error => Logger.of('sendForm').error('error:', error));
+};
 
-export default FormInvitationService;
+
+export const FormInvitationService = {
+    sendForm, inviteCandidates,
+};
+
+export default {
+    sendForm, inviteCandidates,
+};

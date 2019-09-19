@@ -42,7 +42,7 @@ const Candidates = () => {
 
     return (
         <div className={styles.candidates}>
-            <PaginatedTable candidates={candidates} columns={columns} />
+            <PaginatedTable items={candidates} columns={columns} />
             <ButtonMaterial onClick={handleSendClick} caption="Enviar email" />
         </div>
     );

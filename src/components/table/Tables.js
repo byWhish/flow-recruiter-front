@@ -14,7 +14,7 @@ const useStyles = makeStyles({
         width: '60%',
     },
     tableWrapper: {
-        maxHeight: 407,
+        maxHeight: 600,
         overflow: 'auto',
     },
 });
@@ -22,42 +22,40 @@ const useStyles = makeStyles({
 export const SimpleTable = ({ rows, columns, removeAction }) => {
     const classes = useStyles();
     return (
-        <Paper className={classes.root}>
-            <Table className={classes.table}>
-                <TableHead>
-                    <TableRow>
-                        {columns.map(column => (
-                            <TableCell
-                                key={column.id}
-                                align={column.align}
-                                style={{ minWidth: column.minWidth }}
-                            >
-                                {column.label}
-                            </TableCell>
-                        ))}
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {rows.map(row => (
-                        <TableRow key={row.id}>
-                            {columns.map((column) => {
-                                const value = row[column.id];
-                                return (
-                                    <TableCell key={column.id} align={column.align}>
-                                        {column.format && (value instanceof Array || value instanceof Date) ? column.format(value) : value}
-                                    </TableCell>
-                                );
-                            })}
-                            <TableCell key="borrar"><div onClick={removeAction(row.id)}>Borrar</div></TableCell>
-                        </TableRow>
+        <Table className={classes.table}>
+            <TableHead>
+                <TableRow>
+                    {columns.map(column => (
+                        <TableCell
+                            key={column.id}
+                            align={column.align}
+                            style={{ minWidth: column.minWidth }}
+                        >
+                            {column.label}
+                        </TableCell>
                     ))}
-                </TableBody>
-            </Table>
-        </Paper>
+                </TableRow>
+            </TableHead>
+            <TableBody>
+                {rows.map(row => (
+                    <TableRow key={row.id}>
+                        {columns.map((column) => {
+                            const value = row[column.id];
+                            return (
+                                <TableCell key={column.id} align={column.align}>
+                                    {column.format && (value instanceof Array || value instanceof Date) ? column.format(value) : value}
+                                </TableCell>
+                            );
+                        })}
+                        <TableCell key="borrar"><div onClick={removeAction(row.id)}>Borrar</div></TableCell>
+                    </TableRow>
+                ))}
+            </TableBody>
+        </Table>
     );
 };
 
-export const PaginatedTable = ({ candidates, columns }) => {
+export const PaginatedTable = ({ items, columns }) => {
     const classes = useStyles();
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -99,7 +97,7 @@ export const PaginatedTable = ({ candidates, columns }) => {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {candidates.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => (
+                        {items.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => (
                             <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
                                 <TableCell>
                                     <Checkbox
@@ -123,7 +121,7 @@ export const PaginatedTable = ({ candidates, columns }) => {
             <TablePagination
                 rowsPerPageOptions={[10, 25, 100]}
                 component="div"
-                count={candidates.length}
+                count={items.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 backIconButtonProps={{
