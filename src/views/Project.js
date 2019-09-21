@@ -48,7 +48,7 @@ const columns = [
         label: 'duration',
         minWidth: 50,
         align: 'left',
-        format: value => value.toLocaleString(),
+        format: value => `${value} min`,
     },
 ];
 

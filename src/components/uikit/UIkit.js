@@ -14,6 +14,11 @@ import {
 } from '@material-ui/pickers';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Slider from '@material-ui/core/Slider';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -118,7 +123,7 @@ const PrettoSlider = withStyles({
     root: {
         color: '#52af77',
         height: 8,
-        width: 500,
+        width: 400,
     },
     thumb: {
         height: 24,
@@ -155,4 +160,19 @@ export const TimeSlider = ({ field, value, onChange }) => (
         step={1}
         onChange={onChange(field)}
     />
+);
+
+export const ListMaterial = ({ dense, items, onDeleteClick }) => (
+    <List dense={dense}>
+        {items.map(item => (
+            <ListItem key={item}>
+                <ListItemText
+                    primary={item}
+                />
+                <ListItemIcon>
+                    <DeleteIcon onClick={onDeleteClick(item)} />
+                </ListItemIcon>
+            </ListItem>
+        ))}
+    </List>
 );

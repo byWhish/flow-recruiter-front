@@ -8,6 +8,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Checkbox from '@material-ui/core/Checkbox';
+import {instanceOf} from "prop-types";
 
 const useStyles = makeStyles({
     root: {
@@ -43,7 +44,7 @@ export const SimpleTable = ({ rows, columns, removeAction }) => {
                             const value = row[column.id];
                             return (
                                 <TableCell key={column.id} align={column.align}>
-                                    {column.format && (value instanceof Array || value instanceof Date) ? column.format(value) : value}
+                                    {column.format && value ? column.format(value) : value}
                                 </TableCell>
                             );
                         })}
@@ -109,7 +110,7 @@ export const PaginatedTable = ({ items, columns }) => {
                                     const value = row[column.id];
                                     return (
                                         <TableCell key={column.id} align={column.align}>
-                                            {column.format && typeof value === 'number' ? column.format(value) : value}
+                                            {column.format && value ? column.format(value) : value}
                                         </TableCell>
                                     );
                                 })}
