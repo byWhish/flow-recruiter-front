@@ -3,18 +3,21 @@ import nanoid from 'nanoid';
 import styles from './ProjectList.module.css';
 import { ButtonMaterial, InputMaterial } from '../components/uikit/UIkit';
 import { MultipleQuestion, SimpleQuestion } from '../components/dynForms/Questions';
+import { FormService } from '../Services/FormService';
 
 const initialState = new Map();
 
 const emptySimpleQuestion = {
     question: '',
     Component: SimpleQuestion,
+    type: 'simple',
 };
 
 const emptyMultipleQuestion = {
     question: '',
     options: [],
     Component: MultipleQuestion,
+    type: 'multi',
 };
 
 const reducer = (state, action) => {
@@ -37,7 +40,7 @@ const reducer = (state, action) => {
 
 const generate = map => Array.from(map).map(([, value]) => value);
 
-const DynForm = () => {
+const DynForm = ({ recruitmentId }) => {
     const [questions, dispatchQuestion] = useReducer(reducer, initialState);
     const [title, setTitle] = useState('');
 
@@ -61,6 +64,10 @@ const DynForm = () => {
         setTitle(event.target.value);
     }, []);
 
+    const handlePostForm = useCallback(() => {
+        FormService.postForm({ form: { title, questions: Array.from(questions).map(([, q]) => q) }, recruitmentId });
+    }, [questions, recruitmentId, title]);
+
     return (
         <div className={styles.questionList}>
             <InputMaterial label="Titulo del formulario" value={title} onChange={handleTitleChange} />
@@ -78,7 +85,7 @@ const DynForm = () => {
                     />
                 );
             })}
-            <ButtonMaterial caption="Guardar formulario" />
+            <ButtonMaterial caption="Guardar formulario" onClick={handlePostForm} />
         </div>
     );
 };

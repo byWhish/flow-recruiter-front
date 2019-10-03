@@ -24,8 +24,8 @@ const getProjects = () => {
         .catch(error => Logger.of('getProyects').error(error));
 };
 
-const saveMail = (data, type) => {
-    const endpoint = `http://localhost:8080/api/private/project/mail/${type}`;
+const saveMail = (data, recruitmentId = 15, type = 'invite') => {
+    const endpoint = `http://localhost:8080/api/private/project/mail/${recruitmentId}/${type}`;
 
     return axios.post(endpoint, data)
         .then(response => response.data)

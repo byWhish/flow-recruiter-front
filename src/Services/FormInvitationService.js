@@ -1,13 +1,10 @@
 import axios from 'axios';
 import Logger from '../context/Logger';
 
-const inviteCandidates = (candidates) => {
-    const endpoint = 'http://localhost:8080/api/private/mail/invite';
+const inviteCandidates = (candidates, recruitmentId = 15) => {
+    const endpoint = `http://localhost:8080/api/private/mail/${recruitmentId}/invite`;
 
-    const data = {
-        recruitmentId: 1,
-        candidates,
-    };
+    const data = candidates;
 
     return axios.post(endpoint, data)
         .then(response => response.data)
@@ -25,7 +22,6 @@ const sendForm = (id) => {
         .then(response => response.data)
         .catch(error => Logger.of('sendForm').error('error:', error));
 };
-
 
 export const FormInvitationService = {
     sendForm, inviteCandidates,

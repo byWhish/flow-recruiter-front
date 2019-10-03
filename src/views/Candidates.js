@@ -11,18 +11,16 @@ const columns = [
         label: 'id',
         minWidth: 120,
         align: 'left',
-        format: value => value.toLocaleString(),
     },
     {
         id: 'email',
         label: 'email',
         minWidth: 120,
         align: 'left',
-        format: value => value.toFixed(2),
     },
 ];
 
-const Candidates = () => {
+const Candidates = ({ recruitmentId }) => {
     const [candidates, setCandidates] = useState([]);
 
     const fetchCandidates = useCallback(() => {
@@ -37,7 +35,7 @@ const Candidates = () => {
     }, [fetchCandidates]);
 
     const handleSendClick = () => {
-        FormInvitationService.inviteCandidates(candidates).then(() => alert('Ok'));
+        FormInvitationService.inviteCandidates(candidates, recruitmentId).then(() => alert('Ok'));
     };
 
     return (

@@ -12,7 +12,7 @@ const initialState = {
 };
 
 const Mail = ({ match }) => {
-    const { params: { type } } = match;
+    const { params: { type, recruitmentId } } = match;
     const [mail, dispatch] = useReducer(reducer, initialState);
 
     const handleChange = useCallback(field => (event, value) => {
@@ -21,13 +21,13 @@ const Mail = ({ match }) => {
     }, []);
 
     const handleClick = useCallback(() => {
-        ProjectService.saveMail(mail, type);
-    }, [mail, type]);
+        ProjectService.saveMail(mail, recruitmentId, type);
+    }, [mail, recruitmentId, type]);
 
     return (
         <div className={styles.mailWrapper}>
             <InputMaterial label="Titulo" onChange={handleChange} value={mail.title} field="title" id="title" />
-            <InputMaterial label="Mensaje" onChange={handleChange} value={mail.message} field="message" id="message" />
+            <InputMaterial label="Mensaje" onChange={handleChange} value={mail.message} field="message" id="message" multiline />
             <InputMaterial label="Texto link" onChange={handleChange} value={mail.label} field="label" id="label" />
             <ButtonMaterial caption="Guardar" onClick={handleClick} />
         </div>
