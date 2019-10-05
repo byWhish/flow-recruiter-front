@@ -1,8 +1,9 @@
 import axios from 'axios';
 import Logger from '../context/Logger';
+import { config } from '../context/config';
 
-const inviteCandidates = (candidates, recruitmentId = 15) => {
-    const endpoint = `http://localhost:8080/api/private/mail/${recruitmentId}/invite`;
+const inviteCandidates = (candidates, recruitmentId = 15, type) => {
+    const endpoint = `${config.apiUrl}/api/private/mail/${recruitmentId}/${type}`;
 
     const data = candidates;
 
@@ -12,7 +13,7 @@ const inviteCandidates = (candidates, recruitmentId = 15) => {
 };
 
 const sendForm = (id) => {
-    const endpoint = 'http://localhost:8080/api/private/form/completed';
+    const endpoint = `${config.apiUrl}/api/private/form/completed`;
 
     const data = {
         id,

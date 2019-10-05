@@ -2,11 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b2fb2eb8-286c-461c-8d49-00a9fe0b78e2" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.env.dev" beforeDir="false" afterPath="$PROJECT_DIR$/.env.development" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env.production" beforeDir="false" afterPath="$PROJECT_DIR$/.env.production" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/table/Tables.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/table/Tables.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Services/AppointmentService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/AppointmentService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Services/CandidateService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/CandidateService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Services/FormInvitationService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/FormInvitationService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Services/FormService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/FormService.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Services/ProjectService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/ProjectService.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/views/Candidates.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Candidates.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/Form.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Form.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/ProjectList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/ProjectList.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -107,7 +111,7 @@
       <workItem from="1569714008638" duration="696000" />
       <workItem from="1569834678935" duration="3834000" />
       <workItem from="1569935527910" duration="50000" />
-      <workItem from="1570220722048" duration="2950000" />
+      <workItem from="1570220722048" duration="6522000" />
     </task>
     <servers />
   </component>

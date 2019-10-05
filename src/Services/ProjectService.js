@@ -1,8 +1,9 @@
 import axios from 'axios';
 import Logger from '../context/Logger';
+import { config } from '../context/config';
 
 const postProject = ({ project, schedulesList }) => {
-    const endpoint = 'http://localhost:8080/api/private/project/add';
+    const endpoint = `${config.apiUrl}/api/private/project/add`;
     const data = {
         ...project,
         schedules: schedulesList,
@@ -17,7 +18,7 @@ const postProject = ({ project, schedulesList }) => {
 };
 
 const getProjects = () => {
-    const endpoint = 'http://localhost:8080/api/private/project/all';
+    const endpoint = `${config.apiUrl}/api/private/project/all`;
 
     return axios.get(endpoint)
         .then(response => response.data)
@@ -25,7 +26,7 @@ const getProjects = () => {
 };
 
 const saveMail = (data, recruitmentId = 15, type = 'invite') => {
-    const endpoint = `http://localhost:8080/api/private/project/mail/${recruitmentId}/${type}`;
+    const endpoint = `${config.apiUrl}/api/private/project/mail/${recruitmentId}/${type}`;
 
     return axios.post(endpoint, data)
         .then(response => response.data)

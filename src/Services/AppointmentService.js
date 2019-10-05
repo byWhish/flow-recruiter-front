@@ -1,7 +1,8 @@
 import axios from 'axios';
+import { config } from '../context/config';
 
 const fetchGuestConfirmPublic = (id) => {
-    const endpoint = 'http://localhost:8080/api/private/appointment/confirm';
+    const endpoint = `${config.apiUrl}/api/private/appointment/confirm`;
     const data = {
         id,
     };
