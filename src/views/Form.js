@@ -35,13 +35,13 @@ const Form = ({ location }) => {
                     id="standard-name"
                     label="Nombre"
                     value={values.name}
-                    onChange={handleChange('name')}
+                    onChange={handleChange}
                 />
                 <InputMaterial
                     id="standard-surname"
                     label="Apellido"
                     value={values.surname}
-                    onChange={handleChange('surname')}
+                    onChange={handleChange}
                 />
                 <SelectMaterial
                     onChange={handleChange}

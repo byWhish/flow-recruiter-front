@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { PaginatedTable } from '../components/table/Tables';
 import { ProjectService } from '../Services/ProjectService';
 import styles from './ProjectList.module.css';
@@ -42,11 +42,18 @@ const ProjectList = () => {
             });
     }, []);
 
+    const handleSelectRow = useCallback(id => (e, value) => {
+        e.stopPropagation();
+        const proxyCandidate = projects.find(project => project.id === id);
+        proxyCandidate.selected = value;
+    }, [projects]);
+
+
     if (loading === 'pending') return <Loading />;
 
     return (
         <div className={styles.projectList}>
-            <PaginatedTable items={projects} columns={columns} />
+            <PaginatedTable items={projects} columns={columns} onSelectRow={handleSelectRow} />
         </div>
     );
 };

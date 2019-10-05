@@ -8,7 +8,6 @@ import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Checkbox from '@material-ui/core/Checkbox';
-import {instanceOf} from "prop-types";
 
 const useStyles = makeStyles({
     root: {
@@ -56,7 +55,7 @@ export const SimpleTable = ({ rows, columns, removeAction }) => {
     );
 };
 
-export const PaginatedTable = ({ items, columns }) => {
+export const PaginatedTable = ({ items, columns, onSelectRow }) => {
     const classes = useStyles();
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -66,7 +65,7 @@ export const PaginatedTable = ({ items, columns }) => {
     };
 
     const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(+event.target.value);
+        setRowsPerPage(event.target.value);
         setPage(0);
     };
 
@@ -99,11 +98,12 @@ export const PaginatedTable = ({ items, columns }) => {
                     </TableHead>
                     <TableBody>
                         {items.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(row => (
-                            <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                            <TableRow hover role="checkbox" tabIndex={-1} key={row.id}>
                                 <TableCell>
                                     <Checkbox
-                                        checked={false}
+                                        checked={row.selected}
                                         inputProps={{ 'aria-labelledby': 'labelId' }}
+                                        onChange={onSelectRow(row.id)}
                                     />
                                 </TableCell>
                                 {columns.map((column) => {

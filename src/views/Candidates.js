@@ -34,13 +34,19 @@ const Candidates = ({ recruitmentId }) => {
         fetchCandidates();
     }, [fetchCandidates]);
 
-    const handleSendClick = () => {
-        FormInvitationService.inviteCandidates(candidates, recruitmentId).then(() => alert('Ok'));
-    };
+    const handleSendClick = useCallback(() => {
+        FormInvitationService.inviteCandidates(candidates.filter(c => c.selected), recruitmentId).then(() => alert('Ok'));
+    }, [candidates, recruitmentId]);
+
+    const handleSelectRow = useCallback(id => (e, value) => {
+        e.stopPropagation();
+        const proxyCandidate = candidates.find(candidate => candidate.id === id);
+        proxyCandidate.selected = value;
+    }, [candidates]);
 
     return (
         <div className={styles.candidates}>
-            <PaginatedTable items={candidates} columns={columns} />
+            <PaginatedTable items={candidates} columns={columns} onSelectRow={handleSelectRow} />
             <ButtonMaterial onClick={handleSendClick} caption="Enviar email" />
         </div>
     );
