@@ -2,15 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b2fb2eb8-286c-461c-8d49-00a9fe0b78e2" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.env.dev" beforeDir="false" afterPath="$PROJECT_DIR$/.env.development" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env.production" beforeDir="false" afterPath="$PROJECT_DIR$/.env.production" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/router/NavLink.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/router/NavLink.module.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/views/ProjectNavBar.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/views/ProjectNavBar.module.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Services/AppointmentService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/AppointmentService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Services/CandidateService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/CandidateService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Services/FormInvitationService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/FormInvitationService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Services/FormService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/FormService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Services/ProjectService.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/Services/ProjectService.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/Candidates.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Candidates.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/Project.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/Project.module.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/ProjectList.module.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/ProjectList.module.css" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -35,7 +35,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="js.linters.configure.manually.selectedeslint" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/context" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/components/router" />
     <property name="list.type.of.created.stylesheet" value="PostCSS" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.standard" value="true" />
@@ -53,17 +53,17 @@
     <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/components/router" />
+      <recent name="$PROJECT_DIR$/src/Routes" />
+      <recent name="$PROJECT_DIR$/src/context" />
+      <recent name="$PROJECT_DIR$/src/components/uikit" />
+      <recent name="$PROJECT_DIR$/src/views" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/components" />
       <recent name="$PROJECT_DIR$/src" />
       <recent name="$PROJECT_DIR$" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/context" />
-      <recent name="$PROJECT_DIR$/src/components/uikit" />
-      <recent name="$PROJECT_DIR$/src/views" />
-      <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/src/components/router" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -111,7 +111,7 @@
       <workItem from="1569714008638" duration="696000" />
       <workItem from="1569834678935" duration="3834000" />
       <workItem from="1569935527910" duration="50000" />
-      <workItem from="1570220722048" duration="6522000" />
+      <workItem from="1570220722048" duration="10429000" />
     </task>
     <servers />
   </component>

@@ -1,0 +1,7 @@
+.link {
+    width: 200px;
+    height: 50px;
+    display: flex;
+    padding: 10px;
+    text-decoration: none;
+}
