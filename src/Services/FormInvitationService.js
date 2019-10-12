@@ -2,7 +2,7 @@ import axios from 'axios';
 import Logger from '../context/Logger';
 import { config } from '../context/config';
 
-const inviteCandidates = (candidates, recruitmentId = 15, type) => {
+const inviteCandidates = (candidates, recruitmentId, type) => {
     const endpoint = `${config.apiUrl}/api/private/mail/${recruitmentId}/${type}`;
 
     const data = candidates;

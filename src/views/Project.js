@@ -4,6 +4,7 @@ import styles from './Project.module.css';
 import { ButtonMaterial, DateMaterial, InputMaterial, SelectMaterial, TimeSlider } from '../components/uikit/UIkit';
 import { SimpleTable } from '../components/table/Tables';
 import { ProjectService } from '../Services/ProjectService';
+import useValidate, { empty, minLength } from '../context/validate';
 
 const initialState = {
     name: '',
@@ -67,10 +68,11 @@ const arrayReducer = (state, action) => {
     }
 };
 
-const Project = () => {
+const Project = ({ onUpdateProject }) => {
     const [state, dispatch] = useReducer(reducer, initialState);
     const [schedule, dispatchSchedule] = useReducer(reducer, initialSchedule);
     const [list, dispatchList] = useReducer(arrayReducer, []);
+    const [errors, validate] = useValidate([empty, minLength(4)]);
 
     const onChange = useCallback(field => (event, value) => {
         dispatch({ key: field, value: event.target.value || value });
@@ -81,12 +83,14 @@ const Project = () => {
     }, []);
 
     const onDateTimeChange = useCallback(field => (date) => {
-        dispatch({ key: field, value: date });
+        dispatchSchedule({ key: field, value: date });
     }, []);
 
     const handleCreateClick = useCallback(() => {
-        ProjectService.postProject({ project: state, schedulesList: list });
-    }, [list, state]);
+        if (validate(state)) {
+            ProjectService.postProject({ project: state, schedulesList: list }).then(response => onUpdateProject(response));
+        }
+    }, [list, onUpdateProject, state, validate]);
 
     const handleAddScheduleClick = useCallback(() => {
         dispatchList({ type: 'add', value: schedule });
@@ -99,8 +103,8 @@ const Project = () => {
     return (
         <div className={styles.project}>
             <div className={styles.formWrapper}>
-                <InputMaterial value={state.title} label="Titulo" onChange={onChange} field="name" id="name" />
-                <InputMaterial value={state.description} label="Descripcion" onChange={onChange} field="description" id="description" multiline rowsMax="4" />
+                <InputMaterial value={state.title} label="Titulo" onChange={onChange} field="name" id="name" error={errors.name} />
+                <InputMaterial value={state.description} label="Descripcion" onChange={onChange} field="description" id="description" multiline rowsMax="4" error={errors.description} />
                 <DateMaterial value={schedule.initDate} onChange={onDateTimeChange} field="initDate" />
                 <TimeSlider value={schedule.timeRange} onChange={onChangeSchedule} field="timeRange" />
                 <SelectMaterial value={schedule.duration} onChange={onChangeSchedule} label="Duracion" items={durations} field="duration" />

@@ -9,7 +9,8 @@ const postForm = ({ form, recruitmentId }) => {
 
     return axios.post(endpoint, data)
         .then((response) => {
-            Logger.of('FormService.postForm').trace('response:', response);
+            Logger.of('FormService.postForm').trace('response:', response.data);
+            return response.data;
         })
         .catch((error) => {
             Logger.of('FormService.postForm').error(error);

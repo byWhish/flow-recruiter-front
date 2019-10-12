@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import clsx from 'clsx';
 import styles from './NavLink.module.css';
 
-const NavLink = ({ tab, active, onActive, index }) => {
+const NavLink = ({ tab, active, onActive, index, enabled }) => {
     const selected = useMemo(() => index === active, [active, index]);
 
     const handleActive = useCallback(
@@ -16,7 +16,7 @@ const NavLink = ({ tab, active, onActive, index }) => {
     );
 
     return (
-        <Link className={styles.link} to={tab.to} onClick={handleActive}>
+        <Link className={clsx(styles.link, { [styles.disabled]: !enabled })} to={tab.to} onClick={handleActive}>
             <div className={styles.tab}>
                 <span className={clsx(styles.label, { [styles.selected]: selected })}>{tab.label}</span>
             </div>
@@ -32,6 +32,7 @@ NavLink.propTypes = {
     active: PropTypes.number.isRequired,
     onActive: PropTypes.func.isRequired,
     index: PropTypes.number.isRequired,
+    enabled: PropTypes.bool.isRequired,
 };
 
 export default NavLink;

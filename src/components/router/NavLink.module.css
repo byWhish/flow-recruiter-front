@@ -4,4 +4,32 @@
     display: flex;
     padding: 10px;
     text-decoration: none;
+    flex-direction: column;
+}
+
+.tab {
+    padding: 10px;
+}
+
+
+.activeNav {
+    position: relative;
+    bottom: 5px;
+    height: 5px;
+    width: 0;
+    opacity: 0;
+    background-color: blue;
+    transition: all 0.3s;
+    left: 50%;
+    z-index: -1;
+}
+
+.activeNav.selected {
+    width: 100%;
+    left: 0;
+    opacity: 1;
+}
+
+.disabled {
+    pointer-events: none;
 }

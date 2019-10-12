@@ -13,6 +13,7 @@ const postProject = ({ project, schedulesList }) => {
     return axios.post(endpoint, data)
         .then(((response) => {
             Logger.of('postProject').trace(response.data);
+            return response.data;
         }))
         .catch(error => Logger.of('postProject').error(error));
 };
@@ -25,7 +26,7 @@ const getProjects = () => {
         .catch(error => Logger.of('getProyects').error(error));
 };
 
-const saveMail = (data, recruitmentId = 15, type = 'invite') => {
+const saveMail = (data, recruitmentId, type) => {
     const endpoint = `${config.apiUrl}/api/private/project/mail/${recruitmentId}/${type}`;
 
     return axios.post(endpoint, data)

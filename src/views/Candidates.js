@@ -20,13 +20,10 @@ const columns = [
     },
 ];
 
-const Candidates = ({ recruitmentId, match }) => {
-
-    console.log('hola', process.env)
-
+const Candidates = ({ match, onUpdateProject }) => {
     const [candidates, setCandidates] = useState([]);
 
-    const { params: { type } } = match;
+    const { params: { type, recruitmentId } } = match;
 
     const fetchCandidates = useCallback(() => {
         CandidateService.fetchCandidates()
@@ -40,8 +37,9 @@ const Candidates = ({ recruitmentId, match }) => {
     }, [fetchCandidates]);
 
     const handleSendClick = useCallback(() => {
-        FormInvitationService.inviteCandidates(candidates.filter(c => c.selected), recruitmentId, type).then(() => alert('Ok'));
-    }, [candidates, recruitmentId]);
+        FormInvitationService.inviteCandidates(candidates.filter(c => c.selected), recruitmentId, type)
+            .then(response => onUpdateProject(response));
+    }, [candidates, onUpdateProject, recruitmentId, type]);
 
     const handleSelectRow = useCallback(id => (e, value) => {
         e.stopPropagation();

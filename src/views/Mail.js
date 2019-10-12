@@ -11,7 +11,7 @@ const initialState = {
     label: '',
 };
 
-const Mail = ({ match }) => {
+const Mail = ({ match, onUpdateProject }) => {
     const { params: { type, recruitmentId } } = match;
     const [mail, dispatch] = useReducer(reducer, initialState);
 
@@ -21,8 +21,8 @@ const Mail = ({ match }) => {
     }, []);
 
     const handleClick = useCallback(() => {
-        ProjectService.saveMail(mail, recruitmentId, type);
-    }, [mail, recruitmentId, type]);
+        ProjectService.saveMail(mail, recruitmentId, type).then(response => onUpdateProject(response));
+    }, [mail, onUpdateProject, recruitmentId, type]);
 
     return (
         <div className={styles.mailWrapper}>

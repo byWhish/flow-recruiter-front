@@ -40,7 +40,8 @@ const reducer = (state, action) => {
 
 const generate = map => Array.from(map).map(([, value]) => value);
 
-const DynForm = ({ recruitmentId }) => {
+const DynForm = ({ onUpdateProject, match }) => {
+    const { params: { recruitmentId } } = match;
     const [questions, dispatchQuestion] = useReducer(reducer, initialState);
     const [title, setTitle] = useState('');
 
@@ -65,8 +66,9 @@ const DynForm = ({ recruitmentId }) => {
     }, []);
 
     const handlePostForm = useCallback(() => {
-        FormService.postForm({ form: { title, questions: Array.from(questions).map(([, q]) => q) }, recruitmentId });
-    }, [questions, recruitmentId, title]);
+        FormService.postForm({ form: { title, questions: Array.from(questions).map(([, q]) => q) }, recruitmentId })
+            .then(response => onUpdateProject(response));
+    }, [onUpdateProject, questions, recruitmentId, title]);
 
     return (
         <div className={styles.questionList}>

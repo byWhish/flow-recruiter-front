@@ -49,10 +49,11 @@ export const ButtonMaterial = ({ onClick, caption }) => {
     );
 };
 
-export const InputMaterial = ({ onChange, value, label, id, field, multiline, rowsMax }) => {
+export const InputMaterial = ({ onChange, value, label, id, field, multiline, rowsMax, error }) => {
     const classes = useStyles();
     return (
         <TextField
+            error={error}
             id={id}
             label={label}
             className={classes.textField}
