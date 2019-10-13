@@ -1,10 +1,10 @@
-import React, { useCallback, useReducer } from 'react';
+import React, {useCallback, useReducer} from 'react';
 import nanoid from 'nanoid';
 import styles from './Project.module.css';
-import { ButtonMaterial, DateMaterial, InputMaterial, SelectMaterial, TimeSlider } from '../components/uikit/UIkit';
-import { SimpleTable } from '../components/table/Tables';
-import { ProjectService } from '../Services/ProjectService';
-import useValidate, { empty, minLength } from '../context/validate';
+import {ButtonMaterial, DateMaterial, InputMaterial, SelectMaterial, TimeSlider} from '../components/uikit/UIkit';
+import {SimpleTable} from '../components/table/Tables';
+import useValidate, {empty, minArrayLength, minDate, minStrLength} from '../context/validate';
+import {ProjectService} from '../Services/ProjectService';
 
 const initialState = {
     name: '',
@@ -68,11 +68,11 @@ const arrayReducer = (state, action) => {
     }
 };
 
-const Project = ({ onUpdateProject }) => {
+const Project = ({ onUpdateProject, setLoading }) => {
     const [state, dispatch] = useReducer(reducer, initialState);
     const [schedule, dispatchSchedule] = useReducer(reducer, initialSchedule);
     const [list, dispatchList] = useReducer(arrayReducer, []);
-    const [errors, validate] = useValidate([empty, minLength(4)]);
+    const [errors, validate] = useValidate([minDate(new Date()), minArrayLength(1), minStrLength(4), empty]);
 
     const onChange = useCallback(field => (event, value) => {
         dispatch({ key: field, value: event.target.value || value });
@@ -87,14 +87,21 @@ const Project = ({ onUpdateProject }) => {
     }, []);
 
     const handleCreateClick = useCallback(() => {
-        if (validate(state)) {
-            ProjectService.postProject({ project: state, schedulesList: list }).then(response => onUpdateProject(response));
+        if (validate({ ...state, list })) {
+            setLoading(true);
+            ProjectService.postProject({ project: state, schedulesList: list })
+                .then((response) => {
+                    setLoading(false);
+                    return onUpdateProject(response);
+                });
         }
-    }, [list, onUpdateProject, state, validate]);
+    }, [list, onUpdateProject, setLoading, state, validate]);
 
     const handleAddScheduleClick = useCallback(() => {
-        dispatchList({ type: 'add', value: schedule });
-    }, [schedule]);
+        if (validate({ date: schedule.date })) {
+            dispatchList({ type: 'add', value: schedule });
+        }
+    }, [schedule, validate]);
 
     const handleRemoveScheduleClick = useCallback(id => () => {
         dispatchList({ type: 'remove', id });
@@ -105,11 +112,11 @@ const Project = ({ onUpdateProject }) => {
             <div className={styles.formWrapper}>
                 <InputMaterial value={state.title} label="Titulo" onChange={onChange} field="name" id="name" error={errors.name} />
                 <InputMaterial value={state.description} label="Descripcion" onChange={onChange} field="description" id="description" multiline rowsMax="4" error={errors.description} />
-                <DateMaterial value={schedule.initDate} onChange={onDateTimeChange} field="initDate" />
+                <DateMaterial value={schedule.initDate} label="Fecha combocatoria" onChange={onDateTimeChange} field="date" error={errors.date} />
                 <TimeSlider value={schedule.timeRange} onChange={onChangeSchedule} field="timeRange" />
                 <SelectMaterial value={schedule.duration} onChange={onChangeSchedule} label="Duracion" items={durations} field="duration" />
                 <ButtonMaterial caption="Agregar" onClick={handleAddScheduleClick} />
-                <SimpleTable columns={columns} rows={list} removeAction={handleRemoveScheduleClick} />
+                <SimpleTable columns={columns} rows={list} removeAction={handleRemoveScheduleClick} error={errors.list} />
                 <ButtonMaterial caption="Crear proyecto" onClick={handleCreateClick} />
             </div>
         </div>

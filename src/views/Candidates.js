@@ -20,17 +20,20 @@ const columns = [
     },
 ];
 
-const Candidates = ({ match, onUpdateProject }) => {
+const Candidates = ({ match, onUpdateProject, setLoading }) => {
+    console.log('hola')
     const [candidates, setCandidates] = useState([]);
 
     const { params: { type, recruitmentId } } = match;
 
     const fetchCandidates = useCallback(() => {
+        setLoading(true);
         CandidateService.fetchCandidates()
             .then((result) => {
                 setCandidates(result);
+                setLoading(false);
             });
-    }, []);
+    }, [setLoading]);
 
     useEffect(() => {
         fetchCandidates();

@@ -1,5 +1,6 @@
 import Button from '@material-ui/core/Button';
 import React from 'react';
+import * as PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -53,9 +54,9 @@ export const InputMaterial = ({ onChange, value, label, id, field, multiline, ro
     const classes = useStyles();
     return (
         <TextField
-            error={error}
+            error={error.invalid}
             id={id}
-            label={label}
+            label={error.invalid ? error.message : label}
             className={classes.textField}
             value={value}
             onChange={onChange(field)}
@@ -65,6 +66,15 @@ export const InputMaterial = ({ onChange, value, label, id, field, multiline, ro
         />
     );
 };
+
+InputMaterial.propTypes = {
+    error: PropTypes.object,
+};
+
+InputMaterial.defaultProps = {
+    error: {},
+};
+
 
 export const SelectMaterial = ({ label, value, onChange, items, field }) => {
     const classes = useStyles();
@@ -81,14 +91,15 @@ export const SelectMaterial = ({ label, value, onChange, items, field }) => {
     );
 };
 
-export const DateMaterial = ({ value, onChange, field }) => {
+export const DateMaterial = ({ value, onChange, field, error, label }) => {
     const classes = useStyles();
     return (
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <KeyboardDatePicker
+                error={error.invalid}
                 margin="normal"
                 id="date-picker-dialog"
-                label="Date picker dialog"
+                label={error.invalid ? error.message : label}
                 format="dd/MM/yyyy"
                 value={value}
                 onChange={onChange(field)}
@@ -99,6 +110,14 @@ export const DateMaterial = ({ value, onChange, field }) => {
             />
         </MuiPickersUtilsProvider>
     );
+};
+
+DateMaterial.propTypes = {
+    error: PropTypes.object,
+};
+
+DateMaterial.defaultProps = {
+    error: {},
 };
 
 export const TimeMaterial = ({ value, onChange, field }) => {

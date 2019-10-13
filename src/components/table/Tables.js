@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
@@ -8,6 +8,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import Checkbox from '@material-ui/core/Checkbox';
+import * as PropTypes from 'prop-types';
 
 const useStyles = makeStyles({
     root: {
@@ -17,42 +18,56 @@ const useStyles = makeStyles({
         maxHeight: 600,
         overflow: 'auto',
     },
+    errorTable: {
+        color: 'red',
+    },
 });
 
-export const SimpleTable = ({ rows, columns, removeAction }) => {
+export const SimpleTable = ({ rows, columns, removeAction, error }) => {
     const classes = useStyles();
     return (
-        <Table className={classes.table}>
-            <TableHead>
-                <TableRow>
-                    {columns.map(column => (
-                        <TableCell
-                            key={column.id}
-                            align={column.align}
-                            style={{ minWidth: column.minWidth }}
-                        >
-                            {column.label}
-                        </TableCell>
-                    ))}
-                </TableRow>
-            </TableHead>
-            <TableBody>
-                {rows.map(row => (
-                    <TableRow key={row.id}>
-                        {columns.map((column) => {
-                            const value = row[column.id];
-                            return (
-                                <TableCell key={column.id} align={column.align}>
-                                    {column.format && value ? column.format(value) : value}
-                                </TableCell>
-                            );
-                        })}
-                        <TableCell key="borrar"><div onClick={removeAction(row.id)}>Borrar</div></TableCell>
+        <Fragment>
+            <div className={classes.errorTable}>{error.invalid ? error.message : ''}</div>
+            <Table className={classes.table}>
+                <TableHead>
+                    <TableRow>
+                        {columns.map(column => (
+                            <TableCell
+                                key={column.id}
+                                align={column.align}
+                                style={{ minWidth: column.minWidth }}
+                            >
+                                {column.label}
+                            </TableCell>
+                        ))}
                     </TableRow>
-                ))}
-            </TableBody>
-        </Table>
+                </TableHead>
+                <TableBody>
+                    {rows.map(row => (
+                        <TableRow key={row.id}>
+                            {columns.map((column) => {
+                                const value = row[column.id];
+                                return (
+                                    <TableCell key={column.id} align={column.align}>
+                                        {column.format && value ? column.format(value) : value}
+                                    </TableCell>
+                                );
+                            })}
+                            <TableCell key="borrar"><div onClick={removeAction(row.id)}>Borrar</div></TableCell>
+                        </TableRow>
+                    ))}
+                </TableBody>
+            </Table>
+        </Fragment>
     );
+};
+
+SimpleTable.propTypes = {
+    error: PropTypes.object,
+};
+
+SimpleTable.defaultProps = {
+    error: {},
 };
 
 export const PaginatedTable = ({ items, columns, onSelectRow }) => {

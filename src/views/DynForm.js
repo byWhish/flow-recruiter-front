@@ -1,9 +1,11 @@
 import React, { useCallback, useReducer, useState } from 'react';
 import nanoid from 'nanoid';
+import { makeStyles } from '@material-ui/core';
 import styles from './ProjectList.module.css';
 import { ButtonMaterial, InputMaterial } from '../components/uikit/UIkit';
 import { MultipleQuestion, SimpleQuestion } from '../components/dynForms/Questions';
 import { FormService } from '../Services/FormService';
+import useValidate, { empty, minArrayLength, minStrLength } from '../context/validate';
 
 const initialState = new Map();
 
@@ -40,10 +42,18 @@ const reducer = (state, action) => {
 
 const generate = map => Array.from(map).map(([, value]) => value);
 
-const DynForm = ({ onUpdateProject, match }) => {
+const useStyles = makeStyles({
+    error: {
+        color: 'red',
+    },
+});
+
+const DynForm = ({ onUpdateProject, match, setLoading }) => {
+    const classes = useStyles();
     const { params: { recruitmentId } } = match;
     const [questions, dispatchQuestion] = useReducer(reducer, initialState);
     const [title, setTitle] = useState('');
+    const [errors, validate] = useValidate([minStrLength(4), empty, minArrayLength(0)]);
 
     const handleAddSimple = useCallback(() => {
         dispatchQuestion({ value: emptySimpleQuestion, type: 'add' });
@@ -66,15 +76,22 @@ const DynForm = ({ onUpdateProject, match }) => {
     }, []);
 
     const handlePostForm = useCallback(() => {
-        FormService.postForm({ form: { title, questions: Array.from(questions).map(([, q]) => q) }, recruitmentId })
-            .then(response => onUpdateProject(response));
-    }, [onUpdateProject, questions, recruitmentId, title]);
+        if (validate({ title, questions })) {
+            setLoading(true);
+            FormService.postForm({ form: { title, questions: Array.from(questions).map(([, q]) => q) }, recruitmentId })
+                .then((response) => {
+                    setLoading(false);
+                    return onUpdateProject(response);
+                });
+        }
+    }, [onUpdateProject, questions, recruitmentId, setLoading, title, validate]);
 
     return (
         <div className={styles.questionList}>
-            <InputMaterial label="Titulo del formulario" value={title} onChange={handleTitleChange} />
+            <InputMaterial label="Titulo del formulario" value={title} onChange={handleTitleChange} error={errors.title} />
             <ButtonMaterial caption="Agregar pregunta simple" onClick={handleAddSimple} />
             <ButtonMaterial caption="Agregar pregunta multiple" onClick={handleAddMultiple} />
+            <div className={classes.error}>{errors.questions && errors.questions.invalid ? errors.question.message : ''}</div>
             {generate(questions).map((item, idx) => {
                 const { Component } = item;
                 return (

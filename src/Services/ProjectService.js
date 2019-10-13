@@ -18,6 +18,14 @@ const postProject = ({ project, schedulesList }) => {
         .catch(error => Logger.of('postProject').error(error));
 };
 
+const getProject = (id) => {
+    const endpoint = `${config.apiUrl}/api/private/project/${id}`;
+
+    return axios.get(endpoint)
+        .then(response => response.data)
+        .catch(error => Logger.of('getProyect').error(error));
+};
+
 const getProjects = () => {
     const endpoint = `${config.apiUrl}/api/private/project/all`;
 
@@ -35,9 +43,9 @@ const saveMail = (data, recruitmentId, type) => {
 };
 
 export const ProjectService = {
-    postProject, getProjects, saveMail,
+    postProject, getProjects, getProject, saveMail,
 };
 
 export default {
-    postProject, getProjects, saveMail,
+    postProject, getProjects, getProject, saveMail,
 };
