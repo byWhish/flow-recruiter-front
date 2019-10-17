@@ -1,7 +1,14 @@
 import React, { useCallback, useState } from 'react';
 import DeleteIcon from '@material-ui/icons/Delete';
 import styles from './Question.module.css';
-import { ButtonMaterial, InputMaterial, ListMaterial } from '../uikit/UIkit';
+import { ButtonMaterial, InputMaterial, ListMaterial, SelectMaterial } from '../uikit/UIkit';
+import useValidate, { empty, minStrLength } from '../../context/validate';
+
+export const FinalSimpleQuestion = ({ item, onChange }) => <InputMaterial label={item.label} onChange={onChange} value={item.response} field={item.id} id={item.id} multiline />;
+
+export const FinalMultipleQuestion = ({ item, onChange }) => (
+    <SelectMaterial value={item.response} onChange={onChange} label={item.label} items={item.options} field={item.id} />
+);
 
 export const SimpleQuestion = ({ label, onChange, item, onRemoveQuestionClick }) => {
     const handleChange = useCallback(() => (event) => {
@@ -19,6 +26,7 @@ export const SimpleQuestion = ({ label, onChange, item, onRemoveQuestionClick })
 
 export const MultipleQuestion = ({ label, onChange, item, onRemoveQuestionClick }) => {
     const [option, setOption] = useState('');
+    const [errors, validate] = useValidate([minStrLength(4), empty]);
 
     const handleOptionChange = useCallback(() => (event) => {
         setOption(event.target.value);
@@ -30,11 +38,13 @@ export const MultipleQuestion = ({ label, onChange, item, onRemoveQuestionClick 
     }, [item, onChange]);
 
     const handleAddClick = useCallback(() => {
-        const proxyItem = { ...item };
-        proxyItem.options.push(option);
-        setOption('');
-        onChange(proxyItem);
-    }, [item, onChange, option]);
+        if (validate({ option, question: item.question })) {
+            const proxyItem = { ...item };
+            proxyItem.options.push(option);
+            setOption('');
+            onChange(proxyItem);
+        }
+    }, [item, onChange, option, validate]);
 
     const handleDeleteClick = useCallback(selected => () => {
         const proxyItem = { ...item };
@@ -45,11 +55,17 @@ export const MultipleQuestion = ({ label, onChange, item, onRemoveQuestionClick 
 
     return (
         <div className={styles.multipleQuestion}>
-            <InputMaterial label={label} onChange={handleQuestionChange} value={item.question} field={item.id} id={item.id} multiline />
-            <InputMaterial label="Opcion" onChange={handleOptionChange} value={option} field={item.id} id={item.id} multiline />
-            <ButtonMaterial caption="Agregar" onClick={handleAddClick} />
-            <ListMaterial items={item.options} onDeleteClick={handleDeleteClick} />
-            <DeleteIcon onClick={onRemoveQuestionClick(item.id)} />
+            <div className={styles.header}>
+                <InputMaterial label={label} onChange={handleQuestionChange} value={item.question} field="question" id={item.id} multiline error={errors.question} />
+                <DeleteIcon onClick={onRemoveQuestionClick(item.id)} />
+            </div>
+            <div className={styles.option}>
+                <InputMaterial label="Opcion" onChange={handleOptionChange} value={option} field="option" id={item.id} multiline error={errors.option} />
+                <ButtonMaterial caption="Agregar" onClick={handleAddClick} />
+            </div>
+            <div className={styles.list}>
+                <ListMaterial items={item.options} onDeleteClick={handleDeleteClick} width={400} />
+            </div>
         </div>
     );
 };

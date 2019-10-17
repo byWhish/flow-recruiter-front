@@ -1,10 +1,11 @@
-import React, {useCallback, useReducer} from 'react';
+import React, {useCallback, useEffect, useReducer} from 'react';
 import nanoid from 'nanoid';
 import styles from './Project.module.css';
-import {ButtonMaterial, DateMaterial, InputMaterial, SelectMaterial, TimeSlider} from '../components/uikit/UIkit';
-import {SimpleTable} from '../components/table/Tables';
-import useValidate, {empty, minArrayLength, minDate, minStrLength} from '../context/validate';
-import {ProjectService} from '../Services/ProjectService';
+import { ButtonMaterial, DateMaterial, InputMaterial, SelectMaterial, TimeSlider } from '../components/uikit/UIkit';
+import { SimpleTable } from '../components/table/Tables';
+import useValidate, { empty, minArrayLength, minDate, minStrLength } from '../context/validate';
+import { ProjectService } from '../Services/ProjectService';
+import { DONE, LOADING } from '../context/config';
 
 const initialState = {
     name: '',
@@ -88,10 +89,10 @@ const Project = ({ onUpdateProject, setLoading }) => {
 
     const handleCreateClick = useCallback(() => {
         if (validate({ ...state, list })) {
-            setLoading(true);
+            setLoading(LOADING);
             ProjectService.postProject({ project: state, schedulesList: list })
                 .then((response) => {
-                    setLoading(false);
+                    setLoading(DONE);
                     return onUpdateProject(response);
                 });
         }
@@ -107,6 +108,10 @@ const Project = ({ onUpdateProject, setLoading }) => {
         dispatchList({ type: 'remove', id });
     }, []);
 
+    useEffect(() => {
+
+    })
+
     return (
         <div className={styles.project}>
             <div className={styles.formWrapper}>
@@ -117,7 +122,7 @@ const Project = ({ onUpdateProject, setLoading }) => {
                 <SelectMaterial value={schedule.duration} onChange={onChangeSchedule} label="Duracion" items={durations} field="duration" />
                 <ButtonMaterial caption="Agregar" onClick={handleAddScheduleClick} />
                 <SimpleTable columns={columns} rows={list} removeAction={handleRemoveScheduleClick} error={errors.list} />
-                <ButtonMaterial caption="Crear proyecto" onClick={handleCreateClick} />
+                <ButtonMaterial caption="Guardar proyecto" onClick={handleCreateClick} />
             </div>
         </div>
     );

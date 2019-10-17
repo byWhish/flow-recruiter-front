@@ -2,6 +2,7 @@
     position: fixed;
     width: 64px;
     height: 64px;
+    z-index: 2;
 }
 
 .menuButton {
@@ -15,16 +16,18 @@
 
 .menu {
     position: fixed;
+    padding-top: 64px;
     width: 200px;
     height: 100%;
     top: 0;
     left: -200px;
     transition: all .3s ease-out;
-    background-color: #009999;
+    background-color: #3f51b5;
 }
 
 .menu a {
     text-decoration: none;
+    color: white;
 }
 
 .menu.show {

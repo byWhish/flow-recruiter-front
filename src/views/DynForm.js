@@ -1,11 +1,12 @@
 import React, { useCallback, useReducer, useState } from 'react';
 import nanoid from 'nanoid';
 import { makeStyles } from '@material-ui/core';
-import styles from './ProjectList.module.css';
+import styles from './DynForms.module.css';
 import { ButtonMaterial, InputMaterial } from '../components/uikit/UIkit';
 import { MultipleQuestion, SimpleQuestion } from '../components/dynForms/Questions';
 import { FormService } from '../Services/FormService';
 import useValidate, { empty, minArrayLength, minStrLength } from '../context/validate';
+import { DONE, LOADING } from '../context/config';
 
 const initialState = new Map();
 
@@ -56,12 +57,16 @@ const DynForm = ({ onUpdateProject, match, setLoading }) => {
     const [errors, validate] = useValidate([minStrLength(4), empty, minArrayLength(0)]);
 
     const handleAddSimple = useCallback(() => {
-        dispatchQuestion({ value: emptySimpleQuestion, type: 'add' });
-    }, []);
+        if (validate({ title, questions })) {
+            dispatchQuestion({ value: emptySimpleQuestion, type: 'add' });
+        }
+    }, [questions, title, validate]);
 
     const handleAddMultiple = useCallback(() => {
-        dispatchQuestion({ value: emptyMultipleQuestion, type: 'add' });
-    }, []);
+        if (validate({ title, questions })) {
+            dispatchQuestion({ value: emptyMultipleQuestion, type: 'add' });
+        }
+    }, [questions, title, validate]);
 
     const handleRemoveQuestion = useCallback(id => () => {
         dispatchQuestion({ value: id, type: 'remove' });
@@ -77,10 +82,10 @@ const DynForm = ({ onUpdateProject, match, setLoading }) => {
 
     const handlePostForm = useCallback(() => {
         if (validate({ title, questions })) {
-            setLoading(true);
+            setLoading(LOADING);
             FormService.postForm({ form: { title, questions: Array.from(questions).map(([, q]) => q) }, recruitmentId })
                 .then((response) => {
-                    setLoading(false);
+                    setLoading(DONE);
                     return onUpdateProject(response);
                 });
         }
@@ -89,8 +94,10 @@ const DynForm = ({ onUpdateProject, match, setLoading }) => {
     return (
         <div className={styles.questionList}>
             <InputMaterial label="Titulo del formulario" value={title} onChange={handleTitleChange} error={errors.title} />
-            <ButtonMaterial caption="Agregar pregunta simple" onClick={handleAddSimple} />
-            <ButtonMaterial caption="Agregar pregunta multiple" onClick={handleAddMultiple} />
+            <div>
+                <ButtonMaterial caption="+ Pregunta simple" onClick={handleAddSimple} />
+                <ButtonMaterial caption="+ Pregunta multiple" onClick={handleAddMultiple} />
+            </div>
             <div className={classes.error}>{errors.questions && errors.questions.invalid ? errors.question.message : ''}</div>
             {generate(questions).map((item, idx) => {
                 const { Component } = item;

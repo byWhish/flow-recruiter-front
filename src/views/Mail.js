@@ -3,6 +3,7 @@ import styles from './Mail.module.css';
 import { ButtonMaterial, InputMaterial } from '../components/uikit/UIkit';
 import { ProjectService } from '../Services/ProjectService';
 import useValidate, { empty, minStrLength } from '../context/validate';
+import {DONE, LOADING} from "../context/config";
 
 const reducer = (state, action) => ({ ...state, [action.key]: action.value });
 
@@ -23,10 +24,10 @@ const Mail = ({ match, onUpdateProject, setLoading }) => {
 
     const handleClick = useCallback(() => {
         if (validate(mail)) {
-            setLoading(true);
+            setLoading(LOADING);
             ProjectService.saveMail(mail, recruitmentId, type)
                 .then((response) => {
-                    setLoading(false);
+                    setLoading(DONE);
                     return onUpdateProject(response);
                 });
         }

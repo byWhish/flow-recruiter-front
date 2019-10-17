@@ -4,6 +4,7 @@ import CandidateService from '../Services/CandidateService';
 import { PaginatedTable } from '../components/table/Tables';
 import FormInvitationService from '../Services/FormInvitationService';
 import { ButtonMaterial } from '../components/uikit/UIkit';
+import { DONE, LOADING } from '../context/config';
 
 const columns = [
     {
@@ -21,17 +22,16 @@ const columns = [
 ];
 
 const Candidates = ({ match, onUpdateProject, setLoading }) => {
-    console.log('hola')
     const [candidates, setCandidates] = useState([]);
 
     const { params: { type, recruitmentId } } = match;
 
     const fetchCandidates = useCallback(() => {
-        setLoading(true);
+        setLoading(LOADING);
         CandidateService.fetchCandidates()
             .then((result) => {
                 setCandidates(result);
-                setLoading(false);
+                setLoading(DONE);
             });
     }, [setLoading]);
 
@@ -40,9 +40,13 @@ const Candidates = ({ match, onUpdateProject, setLoading }) => {
     }, [fetchCandidates]);
 
     const handleSendClick = useCallback(() => {
+        setLoading(LOADING);
         FormInvitationService.inviteCandidates(candidates.filter(c => c.selected), recruitmentId, type)
-            .then(response => onUpdateProject(response));
-    }, [candidates, onUpdateProject, recruitmentId, type]);
+            .then((response) => {
+                setLoading(DONE);
+                onUpdateProject(response);
+            });
+    }, [candidates, onUpdateProject, recruitmentId, setLoading, type]);
 
     const handleSelectRow = useCallback(id => (e, value) => {
         e.stopPropagation();

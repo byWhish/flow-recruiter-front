@@ -1,7 +1,27 @@
 .simpleQuestion {
-
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .multipleQuestion {
 
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.option {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.list {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

@@ -1,4 +1,9 @@
 .navBar {
     display: flex ;
     margin-top: 100px;
+    flex: 1;
+}
+
+.nabTabs {
+    border-right: solid 1px black;
 }

@@ -5,6 +5,7 @@
     padding: 10px;
     text-decoration: none;
     flex-direction: column;
+    color: black;
 }
 
 .tab {
@@ -18,7 +19,7 @@
     height: 5px;
     width: 0;
     opacity: 0;
-    background-color: blue;
+    background-color: #3f51b5;
     transition: all 0.3s;
     left: 50%;
     z-index: -1;

@@ -141,7 +141,7 @@ export const TimeMaterial = ({ value, onChange, field }) => {
 
 const PrettoSlider = withStyles({
     root: {
-        color: '#52af77',
+        color: '#3f51b5',
         height: 8,
         width: 400,
     },
@@ -182,8 +182,8 @@ export const TimeSlider = ({ field, value, onChange }) => (
     />
 );
 
-export const ListMaterial = ({ dense, items, onDeleteClick }) => (
-    <List dense={dense}>
+export const ListMaterial = ({ dense, items, onDeleteClick, width }) => (
+    <List dense={dense} style={{ width }}>
         {items.map(item => (
             <ListItem key={item}>
                 <ListItemText
