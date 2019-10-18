@@ -85,7 +85,7 @@ export const SelectMaterial = ({ label, value, onChange, items, field }) => {
                 value={value}
                 onChange={onChange(field)}
             >
-                { items.map(item => <MenuItem key={item.value} value={item.value}>{item.label}</MenuItem>) }
+                { items.map(item => <MenuItem key={item.value || item} value={item.value || item}>{item.label || item}</MenuItem>) }
             </Select>
         </FormControl>
     );

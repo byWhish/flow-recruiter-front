@@ -1,34 +1,50 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, {useCallback, useEffect, useReducer, useState} from 'react';
 import * as queryString from 'query-string';
 import styles from './Form.module.css';
 import FormInvitationService from '../Services/FormInvitationService';
 import { ButtonMaterial, InputMaterial, SelectMaterial } from '../components/uikit/UIkit';
 import { FinalMultipleQuestion, FinalSimpleQuestion } from '../components/dynForms/Questions';
 
+const reducer = (state, action) => {
+    switch (action.type) {
+        case 'replace':
+            return action.values;
+        case 'update':
+            const proxy = state.find(item => item.id === action.id);
+            proxy.response = action.value;
+            return [...state];
+        default:
+            return state;
+    }
+};
+
 const Form = ({ location }) => {
     const { search } = location;
     const queryParams = queryString.parse(search);
     const [form, setForm] = useState(null);
-    const [questions, setQuestions] = useState([]);
+    const [questions, dispatchQuestions] = useReducer(reducer, []);
 
-    const handleChange = name => (event) => {
+    const handleChange = id => (event) => {
+        dispatchQuestions({ type: 'update', id, value: event.target.value });
     };
 
     const handleSendClick = () => {
-        FormInvitationService.sendForm(queryParams.id).then(() => alert('Ok'));
+        FormInvitationService.sendForm(questions, form).then(() => alert('Ok'));
     };
 
     const fetchForm = useCallback(() => {
         FormInvitationService.getForm(queryParams.id)
             .then((response) => {
                 setForm(response);
-                setQuestions(response.questions);
+                dispatchQuestions({ type: 'replace', values: response.questions });
             });
     }, [queryParams.id]);
 
     useEffect(() => {
         fetchForm();
     }, [fetchForm]);
+
+    console.log('hola', questions)
 
     return (
         <div className={styles.form}>

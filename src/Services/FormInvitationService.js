@@ -13,15 +13,16 @@ const inviteCandidates = (candidates, recruitmentId, type) => {
         .catch(error => Logger.of('inviteCandidates').error('error:', error));
 };
 
-const sendForm = (id) => {
+const sendForm = (questions, form) => {
     const endpoint = `${config.apiUrl}/api/private/form/completed`;
 
     const data = {
-        id,
+        ...form,
+        questions: questions.map(item => (item.options ? { ...item, type: 'multi' } : { ...item, type: 'single' })),
     };
 
     return axios.post(endpoint, data)
-        .then(response => Project.build(response.data))
+        .then(response => response.data)
         .catch(error => Logger.of('sendForm').error('error:', error));
 };
 

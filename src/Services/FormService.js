@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Logger from '../context/Logger';
 import { config } from '../context/config';
-import Project from "../controllers/Project";
+import Project from '../controllers/Project';
 
 const postForm = ({ form, recruitmentId }) => {
     const endpoint = `${config.apiUrl}/api/private/project/form/${recruitmentId}`;
