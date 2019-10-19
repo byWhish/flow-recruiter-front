@@ -36,15 +36,13 @@ const Form = ({ location }) => {
         FormInvitationService.getForm(queryParams.id)
             .then((response) => {
                 setForm(response);
-                dispatchQuestions({ type: 'replace', values: response.questions });
+                dispatchQuestions({ type: 'replace', values: response.form.questions });
             });
     }, [queryParams.id]);
 
     useEffect(() => {
         fetchForm();
     }, [fetchForm]);
-
-    console.log('hola', questions)
 
     return (
         <div className={styles.form}>
