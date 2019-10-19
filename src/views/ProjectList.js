@@ -42,6 +42,13 @@ const columns = [
         format: value => (value ? <CheckIcon /> : <CloseIcon />),
     },
     {
+        id: 'hasInterested',
+        label: 'Interesados',
+        minWidth: 50,
+        align: 'center',
+        format: value => (value ? <CheckIcon /> : <CloseIcon />),
+    },
+    {
         id: 'hasInvitationMail',
         label: 'Invitation Mail',
         minWidth: 50,

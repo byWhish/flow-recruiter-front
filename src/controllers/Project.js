@@ -20,6 +20,10 @@ class Project {
     get hasResponses() {
         return !!this.responses.length;
     }
+
+    get hasInterested() {
+        return this.invitations.find(invitation => invitation.completed);
+    }
 }
 
 export default Project;

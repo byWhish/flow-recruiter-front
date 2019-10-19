@@ -3,7 +3,9 @@ import styles from './Home.module.css';
 
 const Home = () => (
     <div className={styles.home}>
-        Home
+        <div className={styles.banner}>
+            <img src="/img/logo.png" />
+        </div>
     </div>
 );
 

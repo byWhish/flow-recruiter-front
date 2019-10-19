@@ -16,7 +16,7 @@ const LoadingModal = ({ state }) => {
         case ERROR:
             return (
                 <div className={styles.loadingModal}>
-                    <img alt="error" src="img/error.jog" />
+                    <img alt="error" src="/img/error.jpg" />
                 </div>
             );
         default:

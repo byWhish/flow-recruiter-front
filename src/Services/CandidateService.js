@@ -9,6 +9,13 @@ const fetchCandidates = () => {
         .catch(error => Logger.of('fetchCandidates').error('error:', error));
 };
 
+const fetchInterested = (recruitmentId) => {
+    const endpoint = `${config.apiUrl}/api/private/project/interested${recruitmentId}`;
+    return axios.get(endpoint)
+        .then(response => response.data)
+        .catch(error => Logger.of('fetchCandidates').error('error:', error));
+}
+
 const fetchAnswers = () => {
     const endpoint = `${config.apiUrl}/api/private/form/answer/all`;
     return axios.get(endpoint)
@@ -18,9 +25,9 @@ const fetchAnswers = () => {
 
 
 export const CandidateService = {
-    fetchCandidates, fetchAnswers,
+    fetchCandidates, fetchAnswers, fetchInterested,
 };
 
 export default {
-    fetchCandidates, fetchAnswers,
+    fetchCandidates, fetchAnswers, fetchInterested,
 };

@@ -4,7 +4,7 @@ import styles from './Question.module.css';
 import { ButtonMaterial, InputMaterial, ListMaterial, SelectMaterial } from '../uikit/UIkit';
 import useValidate, { empty, minStrLength } from '../../context/validate';
 
-export const FinalSimpleQuestion = ({ item, onChange }) => <InputMaterial label={item.label} onChange={onChange} value={item.response} field={item.id} id={item.id} multiline />;
+export const FinalSimpleQuestion = ({ item, onChange, error }) => <InputMaterial error={error} label={item.label} onChange={onChange} value={item.response} field={item.id} id={item.id} multiline />;
 
 export const FinalMultipleQuestion = ({ item, onChange }) => (
     <SelectMaterial value={item.response} onChange={onChange} label={item.label} items={item.options} field={item.id} />

@@ -76,12 +76,13 @@ InputMaterial.defaultProps = {
 };
 
 
-export const SelectMaterial = ({ label, value, onChange, items, field }) => {
+export const SelectMaterial = ({ label, value, onChange, items, field, error }) => {
     const classes = useStyles();
     return (
         <FormControl className={classes.formControl}>
-            <InputLabel htmlFor="age-simple">{label}</InputLabel>
+            <InputLabel htmlFor="age-simple">{error.invalid ? error.message : label}</InputLabel>
             <Select
+                error={error.invalid}
                 value={value}
                 onChange={onChange(field)}
             >
@@ -89,6 +90,14 @@ export const SelectMaterial = ({ label, value, onChange, items, field }) => {
             </Select>
         </FormControl>
     );
+};
+
+SelectMaterial.propTypes = {
+    error: PropTypes.object,
+};
+
+SelectMaterial.defaultProps = {
+    error: {},
 };
 
 export const DateMaterial = ({ value, onChange, field, error, label }) => {

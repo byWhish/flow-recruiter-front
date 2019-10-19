@@ -11,6 +11,7 @@ import DynForm from './DynForm';
 import LoadingModal from '../components/uikit/LoadingModal';
 import { ProjectService } from '../Services/ProjectService';
 import { DONE, LOADING, UNLOAD } from '../context/config';
+import { CandidateService } from '../Services/CandidateService';
 
 const emptyProject = {};
 
@@ -33,6 +34,11 @@ const ProjectNavBar = ({ match }) => {
             });
     }, [recruitmentId]);
 
+    const fetchAllCandidates = useCallback(() => CandidateService.fetchCandidates(), []);
+
+    const fetchAllInterested = useCallback(recruitmentId => CandidateService.fetchInterested(recruitmentId), []);
+
+
     useEffect(() => {
         if (recruitmentId) fetchProject();
     }, [fetchProject, recruitmentId]);
@@ -45,11 +51,13 @@ const ProjectNavBar = ({ match }) => {
                     <NavLink enabled={project.id} tab={{ to: `/dynamicForm/${project.id}`, label: 'Formulario' }} index={1} onActive={setActiveTab} active={activeTab} />
                     <NavLink enabled={project.hasForm} tab={{ to: `/mail/${project.id}/form`, label: 'Mail formulario' }} index={2} onActive={setActiveTab} active={activeTab} />
                     <NavLink enabled={project.hasFormMail} tab={{ to: `/candidates/${project.id}/invite`, label: 'Candidatos' }} index={3} onActive={setActiveTab} active={activeTab} />
-                    <NavLink enabled={project.hasResponses} tab={{ to: `/mail/${project.id}/invite`, label: 'Mail invitacion' }} index={4} onActive={setActiveTab} active={activeTab} />
+                    <NavLink enabled={project.hasInterested} tab={{ to: `/mail/${project.id}/invite`, label: 'Mail invitacion' }} index={4} onActive={setActiveTab} active={activeTab} />
+                    <NavLink enabled={project.hasInvitationMail} tab={{ to: `/interested/${project.id}/summon`, label: 'Interesados' }} index={5} onActive={setActiveTab} active={activeTab} />
                 </div>
                 <Switch>
                     <PropsRoute exact path="/" component={Project} onUpdateProject={handleUpdateProject} setLoading={setLoading} />
-                    <PropsRoute exact path="/candidates/:recruitmentId/:type" component={Candidates} onUpdateProject={handleUpdateProject} setLoading={setLoading} />
+                    <PropsRoute exact path="/candidates/:recruitmentId/:type" component={Candidates} fetchCandidates={fetchAllCandidates} onUpdateProject={handleUpdateProject} setLoading={setLoading} />
+                    <PropsRoute exact path="/interested/:recruitmentId/:type" component={Candidates} fetchCandidates={fetchAllInterested} onUpdateProject={handleUpdateProject} setLoading={setLoading} />
                     <PropsRoute exact path="/mail/:recruitmentId/:type" component={Mail} onUpdateProject={handleUpdateProject} setLoading={setLoading} />
                     <PropsRoute exact path="/dynamicForm/:recruitmentId" component={DynForm} onUpdateProject={handleUpdateProject} setLoading={setLoading} />
                 </Switch>

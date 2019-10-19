@@ -21,23 +21,23 @@ const columns = [
     },
 ];
 
-const Candidates = ({ match, onUpdateProject, setLoading }) => {
+const Candidates = ({ match, onUpdateProject, setLoading, fetchCandidates }) => {
     const [candidates, setCandidates] = useState([]);
 
     const { params: { type, recruitmentId } } = match;
 
-    const fetchCandidates = useCallback(() => {
+    const handleFetchCandidates = useCallback(() => {
         setLoading(LOADING);
-        CandidateService.fetchCandidates()
+        fetchCandidates()
             .then((result) => {
                 setCandidates(result);
                 setLoading(DONE);
             });
-    }, [setLoading]);
+    }, [fetchCandidates, setLoading]);
 
     useEffect(() => {
-        fetchCandidates();
-    }, [fetchCandidates]);
+        handleFetchCandidates(recruitmentId);
+    }, [handleFetchCandidates]);
 
     const handleSendClick = useCallback(() => {
         setLoading(LOADING);

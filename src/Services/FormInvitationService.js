@@ -32,8 +32,7 @@ const getForm = (id) => {
     const endpoint = `${config.apiUrl}/api/private/form/${id}`;
 
     return axios.get(endpoint)
-        .then(response => response.data)
-        .catch(error => Logger.of('sendForm').error('error:', error));
+        .then(response => response.data);
 };
 
 export const FormInvitationService = {
