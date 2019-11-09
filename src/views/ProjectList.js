@@ -9,27 +9,21 @@ import history from '../context/History';
 
 const columns = [
     {
-        id: 'id',
-        label: 'id',
-        minWidth: 50,
-        align: 'left',
-    },
-    {
         id: 'timestamp',
-        label: 'timestamp',
+        label: 'Fecha de creacion',
         minWidth: 50,
         align: 'left',
         format: value => new Date(...value).toLocaleString(),
     },
     {
         id: 'name',
-        label: 'name',
+        label: 'Nombre',
         minWidth: 120,
         align: 'left',
     },
     {
         id: 'hasForm',
-        label: 'Form',
+        label: 'Formulario',
         minWidth: 50,
         align: 'center',
         format: value => (value ? <CheckIcon /> : <CloseIcon />),

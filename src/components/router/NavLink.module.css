@@ -1,5 +1,5 @@
 .link {
-    width: 200px;
+    width: 150px;
     height: 50px;
     display: flex;
     padding: 10px;
@@ -33,4 +33,6 @@
 
 .disabled {
     pointer-events: none;
+    background-color: darkslategrey;
+    background-image: repeating-linear-gradient(45deg, transparent, transparent 15px, rgba(255,255,255,.5) 15px, rgba(255,255,255,.5) 30px);
 }

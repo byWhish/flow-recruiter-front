@@ -18,10 +18,10 @@
 .menu {
     position: fixed;
     padding-top: 64px;
-    width: 220px;
+    width: 180px;
     height: 100%;
     top: 0;
-    left: -220px;
+    left: -180px;
     transition: all .3s ease-out;
     background-color: darkslategrey;
 }

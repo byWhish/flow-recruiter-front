@@ -142,9 +142,34 @@ const Project = ({ onUpdateProject, setLoading, edit, project }) => {
     return (
         <div className={styles.project}>
             <div className={styles.formWrapper}>
-                <InputMaterial value={state.name} label="Titulo" onChange={onChange} field="name" id="name" error={errors.name} disabled={edit} />
-                <InputMaterial value={state.description} label="Descripcion" onChange={onChange} field="description" id="description" multiline rowsMax="4" error={errors.description} disabled={edit} />
-                <DateMaterial value={schedule.date} label="Fecha combocatoria" onChange={onDateTimeChange} field="date" error={errors.date} disabled={edit} />
+                <InputMaterial
+                    value={state.name}
+                    label="Titulo"
+                    onChange={onChange}
+                    field="name"
+                    id="name"
+                    error={errors.name}
+                    disabled={edit}
+                />
+                <InputMaterial
+                    value={state.description}
+                    label="Descripcion"
+                    onChange={onChange}
+                    field="description"
+                    id="description"
+                    multiline
+                    rowsMax="4"
+                    error={errors.description}
+                    disabled={edit}
+                />
+                <DateMaterial
+                    value={schedule.date}
+                    label="Fecha combocatoria"
+                    onChange={onDateTimeChange}
+                    field="date"
+                    error={errors.date}
+                    disabled={edit}
+                />
                 {!edit && <TimeSlider value={schedule.timeRange} onChange={onChangeSchedule} field="timeRange" />}
                 {!edit && <SelectMaterial value={schedule.duration} onChange={onChangeSchedule} label="Duracion" items={durations} field="duration" />}
                 {!edit && <ButtonMaterial caption="Agregar" onClick={handleAddScheduleClick} />}

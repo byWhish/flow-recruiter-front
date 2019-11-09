@@ -24,7 +24,7 @@ const emptyMultipleQuestion = {
 };
 
 const reducer = (state, action) => {
-    const proxyState = new Map([...state]);
+    let proxyState = new Map([...state]);
     switch (action.type) {
         case 'add':
             const id = nanoid(6);
@@ -39,6 +39,7 @@ const reducer = (state, action) => {
         case 'replace':
             action.value.forEach((item) => {
                 const id = nanoid(6);
+                proxyState = new Map();
                 proxyState.set(id, { ...item, id });
             });
             break;
@@ -64,7 +65,7 @@ const DynForm = ({ onUpdateProject, match, setLoading, edit, project }) => {
     const { params: { recruitmentId } } = match;
     const [questions, dispatchQuestion] = useReducer(reducer, initialState);
     const [title, setTitle] = useState('');
-    const [errors, validate] = useValidate([minStrLength(4), empty, minArrayLength(0)]);
+    const [errors, validate] = useValidate([minStrLength(2), empty, minArrayLength(0)]);
 
     const disabled = edit && project.hasForm;
 

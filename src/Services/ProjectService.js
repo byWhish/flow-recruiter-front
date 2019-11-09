@@ -10,15 +10,21 @@ const generatreBlocks = scheduleList => scheduleList.map((schedule) => {
     const { init, end, duration, date } = schedule;
     const totalMinutes = (end - init) * 60;
     const blockAmount = totalMinutes / duration;
-    schedule.blocks = [];
+    const blocks = [];
     for (let i = 0; i < blockAmount; i++) {
         const block = {
             order: i,
             time: addMinutes(date, (init * 60) + (i * duration)),
         };
-        schedule.blocks.push(block);
+        blocks.push(block);
     }
-    return schedule;
+    return {
+        init,
+        end,
+        duration,
+        date,
+        blocks,
+    };
 });
 
 const postProject = ({ project, schedulesList }) => {

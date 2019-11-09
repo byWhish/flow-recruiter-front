@@ -13,7 +13,11 @@ import { ProjectService } from '../Services/ProjectService';
 import { DONE, LOADING, UNLOAD } from '../context/config';
 import { CandidateService } from '../Services/CandidateService';
 
-const emptyProject = {};
+const emptyProject = {
+    name: '',
+    description: '',
+    schedules: [],
+};
 
 const ProjectNavBar = ({ match }) => {
     const [activeTab, setActiveTab] = useState(0);
@@ -42,7 +46,12 @@ const ProjectNavBar = ({ match }) => {
 
 
     useEffect(() => {
-        if (recruitmentId) fetchProject();
+        if (recruitmentId) {
+            fetchProject();
+        } else {
+            setEdit(false);
+            setProject(emptyProject);
+        }
     }, [fetchProject, recruitmentId]);
 
     return (

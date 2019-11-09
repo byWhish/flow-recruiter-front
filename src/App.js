@@ -7,7 +7,7 @@ import ProjectNavBar from './views/ProjectNavBar';
 import ProjectList from './views/ProjectList';
 import Sidebar from './components/menu/SideBar';
 import Form from './views/Form';
-import Calendar from "./views/Calendar";
+import Calendar from './views/Calendar';
 
 const App = () => (
     <div className="App">

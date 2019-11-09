@@ -13,10 +13,10 @@ const Sidebar = () => {
     }, []);
     return (
         <div className={styles.sideBar}>
-            <div className={styles.menuButton} onClick={handleOpenClick}>
+            <div className={styles.menuButton} onClick={handleOpenClick} role="button" tabIndex={0}>
                 <img src="/img/menu.png" />
             </div>
-            <div className={clsx([styles.menu], { [styles.show]: show })} onClick={handleCloseClick}>
+            <div className={clsx([styles.menu], { [styles.show]: show })} onClick={handleCloseClick} onMouseLeave={handleCloseClick} role="button" tabIndex={0}>
                 <Link to="/home">
                     <div className={styles.menuItem}>
                         <span>Home</span>
