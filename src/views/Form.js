@@ -5,7 +5,7 @@ import FormInvitationService from '../Services/FormInvitationService';
 import { ButtonMaterial } from '../components/uikit/UIkit';
 import { FinalMultipleQuestion, FinalSimpleQuestion } from '../components/dynForms/Questions';
 import LoadingModal from '../components/uikit/LoadingModal';
-import {DONE, ERROR, LOADING, UNLOAD} from '../context/config';
+import { DONE, ERROR, LOADING, UNLOAD } from '../context/config';
 import useValidate, { empty, minStrLength } from '../context/validate';
 
 const reducer = (state, action) => {
@@ -51,10 +51,7 @@ const Form = ({ location }) => {
                 dispatchQuestions({ type: 'replace', values: response.form.questions });
                 setLoading(DONE);
             })
-            .catch(error => {
-                alert(error.response.data.message);
-                setLoading(ERROR);
-            });
+            .catch(() => { setLoading(ERROR); });
     }, [queryParams.id]);
 
     useEffect(() => {

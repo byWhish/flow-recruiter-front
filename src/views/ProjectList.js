@@ -42,11 +42,11 @@ const columns = [
         format: value => (value ? <CheckIcon /> : <CloseIcon />),
     },
     {
-        id: 'hasInterested',
+        id: 'interested',
         label: 'Interesados',
         minWidth: 50,
         align: 'center',
-        format: value => (value ? <CheckIcon /> : <CloseIcon />),
+        // format: value => (value ? <CheckIcon /> : <CloseIcon />),
     },
     {
         id: 'hasInvitationMail',

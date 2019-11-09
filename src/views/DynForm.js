@@ -1,4 +1,4 @@
-import React, { useCallback, useReducer, useState } from 'react';
+import React, { useCallback, useEffect, useReducer, useState } from 'react';
 import nanoid from 'nanoid';
 import { makeStyles } from '@material-ui/core';
 import styles from './DynForms.module.css';
@@ -36,6 +36,12 @@ const reducer = (state, action) => {
         case 'update':
             proxyState.set(action.value.id, action.value);
             break;
+        case 'replace':
+            action.value.forEach((item) => {
+                const id = nanoid(6);
+                proxyState.set(id, { ...item, id });
+            });
+            break;
         default:
     }
     return proxyState;
@@ -49,12 +55,18 @@ const useStyles = makeStyles({
     },
 });
 
-const DynForm = ({ onUpdateProject, match, setLoading }) => {
+const processQuestions = questions => questions.map(question => (question.options
+    ? { question: question.label, options: question.options, Component: MultipleQuestion, type: 'multi' }
+    : { question: question.label, Component: SimpleQuestion, type: 'simple' }));
+
+const DynForm = ({ onUpdateProject, match, setLoading, edit, project }) => {
     const classes = useStyles();
     const { params: { recruitmentId } } = match;
     const [questions, dispatchQuestion] = useReducer(reducer, initialState);
     const [title, setTitle] = useState('');
     const [errors, validate] = useValidate([minStrLength(4), empty, minArrayLength(0)]);
+
+    const disabled = edit && project.hasForm;
 
     const handleAddSimple = useCallback(() => {
         if (validate({ title, questions })) {
@@ -91,12 +103,19 @@ const DynForm = ({ onUpdateProject, match, setLoading }) => {
         }
     }, [onUpdateProject, questions, recruitmentId, setLoading, title, validate]);
 
+    useEffect(() => {
+        if (edit && project.form) {
+            setTitle(project.form.title);
+            dispatchQuestion({ type: 'replace', value: processQuestions(project.form.questions) });
+        }
+    }, [edit, project.form]);
+
     return (
         <div className={styles.questionList}>
-            <InputMaterial label="Titulo del formulario" value={title} onChange={handleTitleChange} error={errors.title} />
+            <InputMaterial label="Titulo del formulario" value={title} onChange={handleTitleChange} error={errors.title} disabled={disabled} />
             <div>
-                <ButtonMaterial caption="+ Pregunta simple" onClick={handleAddSimple} />
-                <ButtonMaterial caption="+ Pregunta multiple" onClick={handleAddMultiple} />
+                {!disabled && <ButtonMaterial caption="+ Pregunta simple" onClick={handleAddSimple} />}
+                {!disabled && <ButtonMaterial caption="+ Pregunta multiple" onClick={handleAddMultiple} />}
             </div>
             <div className={classes.error}>{errors.questions && errors.questions.invalid ? errors.question.message : ''}</div>
             {generate(questions).map((item, idx) => {
@@ -108,10 +127,11 @@ const DynForm = ({ onUpdateProject, match, setLoading }) => {
                         item={item}
                         onRemoveQuestionClick={handleRemoveQuestion}
                         key={item.id}
+                        disabled={disabled}
                     />
                 );
             })}
-            <ButtonMaterial caption="Guardar formulario" onClick={handlePostForm} />
+            {!disabled && <ButtonMaterial caption="Guardar formulario" onClick={handlePostForm} />}
         </div>
     );
 };

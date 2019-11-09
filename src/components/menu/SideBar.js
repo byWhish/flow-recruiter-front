@@ -17,7 +17,7 @@ const Sidebar = () => {
                 <img src="/img/menu.png" />
             </div>
             <div className={clsx([styles.menu], { [styles.show]: show })} onClick={handleCloseClick}>
-                <Link to="/">
+                <Link to="/home">
                     <div className={styles.menuItem}>
                         <span>Home</span>
                     </div>

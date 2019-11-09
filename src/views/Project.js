@@ -1,5 +1,6 @@
-import React, {useCallback, useEffect, useReducer} from 'react';
+import React, { useCallback, useEffect, useReducer } from 'react';
 import nanoid from 'nanoid';
+import { format, startOfDay } from 'date-fns';
 import styles from './Project.module.css';
 import { ButtonMaterial, DateMaterial, InputMaterial, SelectMaterial, TimeSlider } from '../components/uikit/UIkit';
 import { SimpleTable } from '../components/table/Tables';
@@ -26,65 +27,88 @@ const durations = [
 
 const columns = [
     {
-        id: 'id',
-        label: 'id',
-        minWidth: 40,
-        align: 'left',
-    },
-    {
         id: 'date',
-        label: 'date',
+        label: 'Fecha',
         minWidth: 130,
         align: 'left',
-        format: value => value.toLocaleString(),
+        format: value => format(value, 'dd/MM/yyyy'),
     },
     {
-        id: 'timeRange',
-        label: 'timeRange',
+        id: 'init',
+        label: 'Hora inicio',
         minWidth: 50,
-        align: 'left',
-        format: value => `${value[0]} a ${value[1]}`,
+        align: 'center',
+        format: value => `${value}:00`,
+    },
+    {
+        id: 'end',
+        label: 'Hora fin',
+        minWidth: 50,
+        align: 'center',
+        format: value => `${value}:00`,
     },
     {
         id: 'duration',
-        label: 'duration',
+        label: 'Duracion',
         minWidth: 50,
         align: 'left',
         format: value => `${value} min`,
     },
 ];
 
-const reducer = (state, action) => ({ ...state, [action.key]: action.value });
+const processSchedules = schedules => schedules.map(schedule => ({ ...schedule, date: new Date(schedule.date), id: nanoid(8) }));
+
+const reducer = (state, action) => {
+    switch (action.type) {
+        case 'update':
+            return { ...state, [action.key]: action.value };
+        case 'replace':
+            return action.value;
+        default:
+            return state;
+    }
+};
 
 const arrayReducer = (state, action) => {
     const proxyState = [...state];
     switch (action.type) {
         case 'add':
-            proxyState.push({ ...action.value, id: nanoid(8) });
+            const { date, timeRange, duration } = action.value;
+            const schedule = {
+                date: startOfDay(date),
+                timeRange,
+                duration,
+                init: timeRange[0],
+                end: timeRange[1],
+                id: nanoid(8),
+            };
+            proxyState.push(schedule);
             return proxyState;
         case 'remove':
             return proxyState.filter(item => item.id !== action.id);
+        case 'replace':
+            return action.value;
         default:
             return false;
     }
 };
 
-const Project = ({ onUpdateProject, setLoading }) => {
+const Project = ({ onUpdateProject, setLoading, edit, project }) => {
     const [state, dispatch] = useReducer(reducer, initialState);
     const [schedule, dispatchSchedule] = useReducer(reducer, initialSchedule);
     const [list, dispatchList] = useReducer(arrayReducer, []);
     const [errors, validate] = useValidate([minDate(new Date()), minArrayLength(1), minStrLength(4), empty]);
 
     const onChange = useCallback(field => (event, value) => {
-        dispatch({ key: field, value: event.target.value || value });
+        dispatch({ type: 'update', key: field, value: event.target.value || value });
     }, []);
 
     const onChangeSchedule = useCallback(field => (event, value) => {
-        dispatchSchedule({ key: field, value: event.target.value || value });
+        dispatchSchedule({ type: 'update', key: field, value: event.target.value || value });
     }, []);
 
     const onDateTimeChange = useCallback(field => (date) => {
-        dispatchSchedule({ key: field, value: date });
+        dispatchSchedule({ type: 'update', key: field, value: date });
     }, []);
 
     const handleCreateClick = useCallback(() => {
@@ -109,20 +133,23 @@ const Project = ({ onUpdateProject, setLoading }) => {
     }, []);
 
     useEffect(() => {
-
-    })
+        if (edit && project.schedules) {
+            dispatchList({ type: 'replace', value: processSchedules(project.schedules) });
+            dispatch({ type: 'replace', value: { name: project.name, description: project.description } });
+        }
+    }, [edit, project]);
 
     return (
         <div className={styles.project}>
             <div className={styles.formWrapper}>
-                <InputMaterial value={state.title} label="Titulo" onChange={onChange} field="name" id="name" error={errors.name} />
-                <InputMaterial value={state.description} label="Descripcion" onChange={onChange} field="description" id="description" multiline rowsMax="4" error={errors.description} />
-                <DateMaterial value={schedule.initDate} label="Fecha combocatoria" onChange={onDateTimeChange} field="date" error={errors.date} />
-                <TimeSlider value={schedule.timeRange} onChange={onChangeSchedule} field="timeRange" />
-                <SelectMaterial value={schedule.duration} onChange={onChangeSchedule} label="Duracion" items={durations} field="duration" />
-                <ButtonMaterial caption="Agregar" onClick={handleAddScheduleClick} />
-                <SimpleTable columns={columns} rows={list} removeAction={handleRemoveScheduleClick} error={errors.list} />
-                <ButtonMaterial caption="Guardar proyecto" onClick={handleCreateClick} />
+                <InputMaterial value={state.name} label="Titulo" onChange={onChange} field="name" id="name" error={errors.name} disabled={edit} />
+                <InputMaterial value={state.description} label="Descripcion" onChange={onChange} field="description" id="description" multiline rowsMax="4" error={errors.description} disabled={edit} />
+                <DateMaterial value={schedule.date} label="Fecha combocatoria" onChange={onDateTimeChange} field="date" error={errors.date} disabled={edit} />
+                {!edit && <TimeSlider value={schedule.timeRange} onChange={onChangeSchedule} field="timeRange" />}
+                {!edit && <SelectMaterial value={schedule.duration} onChange={onChangeSchedule} label="Duracion" items={durations} field="duration" />}
+                {!edit && <ButtonMaterial caption="Agregar" onClick={handleAddScheduleClick} />}
+                <SimpleTable columns={columns} rows={list} remove removeAction={handleRemoveScheduleClick} error={errors.list} />
+                {!edit && <ButtonMaterial caption="Guardar proyecto" onClick={handleCreateClick} />}
             </div>
         </div>
     );

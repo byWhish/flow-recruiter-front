@@ -17,12 +17,12 @@ class Project {
         return !!this.invitationMail;
     }
 
-    get hasResponses() {
-        return !!this.responses.length;
-    }
-
     get hasInterested() {
         return this.invitations.find(invitation => invitation.completed);
+    }
+
+    get interested() {
+        return this.invitations.filter(invitation => invitation.completed).length;
     }
 }
 

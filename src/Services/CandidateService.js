@@ -10,7 +10,7 @@ const fetchCandidates = () => {
 };
 
 const fetchInterested = (recruitmentId) => {
-    const endpoint = `${config.apiUrl}/api/private/project/interested${recruitmentId}`;
+    const endpoint = `${config.apiUrl}/api/private/project/interested/${recruitmentId}`;
     return axios.get(endpoint)
         .then(response => response.data)
         .catch(error => Logger.of('fetchCandidates').error('error:', error));

@@ -1,5 +1,5 @@
 import Button from '@material-ui/core/Button';
-import React from 'react';
+import React, {Fragment} from 'react';
 import * as PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
@@ -20,6 +20,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import DeleteIcon from '@material-ui/icons/Delete';
+import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -50,11 +51,12 @@ export const ButtonMaterial = ({ onClick, caption }) => {
     );
 };
 
-export const InputMaterial = ({ onChange, value, label, id, field, multiline, rowsMax, error }) => {
+export const InputMaterial = ({ onChange, value, label, id, field, multiline, rowsMax, error, disabled }) => {
     const classes = useStyles();
     return (
         <TextField
             error={error.invalid}
+            disabled={disabled}
             id={id}
             label={error.invalid ? error.message : label}
             className={classes.textField}
@@ -94,18 +96,21 @@ export const SelectMaterial = ({ label, value, onChange, items, field, error }) 
 
 SelectMaterial.propTypes = {
     error: PropTypes.object,
+    onChange: PropTypes.func,
 };
 
 SelectMaterial.defaultProps = {
     error: {},
+    onChange: () => {},
 };
 
-export const DateMaterial = ({ value, onChange, field, error, label }) => {
+export const DateMaterial = ({ value, onChange, field, error, label, disabled }) => {
     const classes = useStyles();
     return (
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <KeyboardDatePicker
                 error={error.invalid}
+                disabled={disabled}
                 margin="normal"
                 id="date-picker-dialog"
                 label={error.invalid ? error.message : label}
@@ -180,15 +185,18 @@ const PrettoSlider = withStyles({
 })(Slider);
 
 export const TimeSlider = ({ field, value, onChange }) => (
-    <PrettoSlider
-        min={9}
-        max={18}
-        valueLabelDisplay="auto"
-        // aria-label="pretto slider"
-        value={value}
-        step={1}
-        onChange={onChange(field)}
-    />
+    <div style={{ marginTop: '30px' }}>
+        <Typography>Elige una franja horaria</Typography>
+        <PrettoSlider
+            min={9}
+            max={18}
+            valueLabelDisplay="auto"
+            // aria-label="pretto slider"
+            value={value}
+            step={1}
+            onChange={onChange(field)}
+        />
+    </div>
 );
 
 export const ListMaterial = ({ dense, items, onDeleteClick, width }) => (
@@ -205,3 +213,11 @@ export const ListMaterial = ({ dense, items, onDeleteClick, width }) => (
         ))}
     </List>
 );
+
+ListMaterial.propTypes = {
+    onDeleteClick: PropTypes.func,
+}
+
+ListMaterial.defaultProps = {
+    onDeleteClick: () => {},
+}

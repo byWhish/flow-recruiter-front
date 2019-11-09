@@ -10,7 +10,7 @@ export const FinalMultipleQuestion = ({ item, onChange }) => (
     <SelectMaterial value={item.response} onChange={onChange} label={item.label} items={item.options} field={item.id} />
 );
 
-export const SimpleQuestion = ({ label, onChange, item, onRemoveQuestionClick }) => {
+export const SimpleQuestion = ({ label, onChange, item, onRemoveQuestionClick, disabled }) => {
     const handleChange = useCallback(() => (event) => {
         const proxyItem = { ...item, question: event.target.value };
         onChange(proxyItem);
@@ -18,13 +18,13 @@ export const SimpleQuestion = ({ label, onChange, item, onRemoveQuestionClick })
 
     return (
         <div className={styles.simpleQuestion}>
-            <InputMaterial label={label} onChange={handleChange} value={item.question} field={item.id} id={item.id} multiline />
+            <InputMaterial label={label} onChange={handleChange} value={item.question} field={item.id} id={item.id} multiline disabled={disabled} />
             <DeleteIcon onClick={onRemoveQuestionClick(item.id)} />
         </div>
     );
 };
 
-export const MultipleQuestion = ({ label, onChange, item, onRemoveQuestionClick }) => {
+export const MultipleQuestion = ({ label, onChange, item, onRemoveQuestionClick, disabled }) => {
     const [option, setOption] = useState('');
     const [errors, validate] = useValidate([minStrLength(4), empty]);
 
@@ -56,11 +56,11 @@ export const MultipleQuestion = ({ label, onChange, item, onRemoveQuestionClick 
     return (
         <div className={styles.multipleQuestion}>
             <div className={styles.header}>
-                <InputMaterial label={label} onChange={handleQuestionChange} value={item.question} field="question" id={item.id} multiline error={errors.question} />
+                <InputMaterial label={label} onChange={handleQuestionChange} value={item.question} field="question" id={item.id} multiline error={errors.question} disabled={disabled} />
                 <DeleteIcon onClick={onRemoveQuestionClick(item.id)} />
             </div>
             <div className={styles.option}>
-                <InputMaterial label="Opcion" onChange={handleOptionChange} value={option} field="option" id={item.id} multiline error={errors.option} />
+                <InputMaterial label="Opcion" onChange={handleOptionChange} value={option} field="option" id={item.id} multiline error={errors.option} disabled={disabled} />
                 <ButtonMaterial caption="Agregar" onClick={handleAddClick} />
             </div>
             <div className={styles.list}>

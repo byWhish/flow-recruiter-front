@@ -2,8 +2,11 @@
     display: flex ;
     margin-top: 100px;
     flex: 1;
+    background-color: white;
 }
 
 .nabTabs {
     border-right: solid 1px black;
+    background-color: darkslategrey;
+    color: white !important;
 }

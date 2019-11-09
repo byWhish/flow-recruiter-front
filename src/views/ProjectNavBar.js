@@ -20,6 +20,7 @@ const ProjectNavBar = ({ match }) => {
     const [project, setProject] = useState(emptyProject);
     const [loading, setLoading] = useState(UNLOAD);
     const { params: { recruitmentId } } = match;
+    const [edit, setEdit] = useState(false);
 
     const handleUpdateProject = useCallback((newProject) => {
         setProject(newProject);
@@ -29,14 +30,15 @@ const ProjectNavBar = ({ match }) => {
         setLoading(LOADING);
         ProjectService.getProject(recruitmentId)
             .then((response) => {
-                setLoading(DONE);
+                setEdit(true);
                 setProject(response);
+                setLoading(DONE);
             });
     }, [recruitmentId]);
 
     const fetchAllCandidates = useCallback(() => CandidateService.fetchCandidates(), []);
 
-    const fetchAllInterested = useCallback(recruitmentId => CandidateService.fetchInterested(recruitmentId), []);
+    const fetchAllInterested = useCallback(() => CandidateService.fetchInterested(recruitmentId), [recruitmentId]);
 
 
     useEffect(() => {
@@ -55,11 +57,11 @@ const ProjectNavBar = ({ match }) => {
                     <NavLink enabled={project.hasInvitationMail} tab={{ to: `/interested/${project.id}/summon`, label: 'Interesados' }} index={5} onActive={setActiveTab} active={activeTab} />
                 </div>
                 <Switch>
-                    <PropsRoute exact path="/" component={Project} onUpdateProject={handleUpdateProject} setLoading={setLoading} />
-                    <PropsRoute exact path="/candidates/:recruitmentId/:type" component={Candidates} fetchCandidates={fetchAllCandidates} onUpdateProject={handleUpdateProject} setLoading={setLoading} />
-                    <PropsRoute exact path="/interested/:recruitmentId/:type" component={Candidates} fetchCandidates={fetchAllInterested} onUpdateProject={handleUpdateProject} setLoading={setLoading} />
-                    <PropsRoute exact path="/mail/:recruitmentId/:type" component={Mail} onUpdateProject={handleUpdateProject} setLoading={setLoading} />
-                    <PropsRoute exact path="/dynamicForm/:recruitmentId" component={DynForm} onUpdateProject={handleUpdateProject} setLoading={setLoading} />
+                    <PropsRoute exact path="/" component={Project} onUpdateProject={handleUpdateProject} setLoading={setLoading} edit={edit} project={project} />
+                    <PropsRoute exact path="/candidates/:recruitmentId/:type" component={Candidates} fetchCandidates={fetchAllCandidates} onUpdateProject={handleUpdateProject} setLoading={setLoading} edit={edit} />
+                    <PropsRoute exact path="/interested/:recruitmentId/:type" component={Candidates} fetchCandidates={fetchAllInterested} onUpdateProject={handleUpdateProject} setLoading={setLoading} edit={edit} />
+                    <PropsRoute exact path="/mail/:recruitmentId/:type" component={Mail} onUpdateProject={handleUpdateProject} setLoading={setLoading} edit={edit} project={project} />
+                    <PropsRoute exact path="/dynamicForm/:recruitmentId" component={DynForm} onUpdateProject={handleUpdateProject} setLoading={setLoading} edit={edit} project={project} />
                 </Switch>
             </MemoryRouter>
             <LoadingModal state={loading} />

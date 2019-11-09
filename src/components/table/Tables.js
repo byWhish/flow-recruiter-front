@@ -26,7 +26,7 @@ const useStyles = makeStyles({
 
 const notNull = value => value !== null && value !== undefined;
 
-export const SimpleTable = ({ rows, columns, error, width, remove, removeAction, edit, editAction }) => {
+export const SimpleTable = ({ rows, columns, error, width, remove, removeAction, edit, editAction, select, selectAction }) => {
     const classes = useStyles();
     return (
         <Fragment>
@@ -45,12 +45,17 @@ export const SimpleTable = ({ rows, columns, error, width, remove, removeAction,
                         ))}
                         {remove && (
                             <TableCell key="borrar">
-                                <DeleteIcon opacity=".5" />
+                                <DeleteIcon opacity=".5" pointerEvents="none" />
                             </TableCell>
                         )}
                         {edit && (
                             <TableCell key="editar">
-                                <EditIcon opacity=".5" />
+                                <EditIcon opacity=".5" pointerEvents="none" />
+                            </TableCell>
+                        )}
+                        {select && (
+                            <TableCell key="seleccionar">
+                                Seleccionar
                             </TableCell>
                         )}
                     </TableRow>
@@ -76,6 +81,15 @@ export const SimpleTable = ({ rows, columns, error, width, remove, removeAction,
                                     <EditIcon onClick={editAction(row.id)} />
                                 </TableCell>
                             )}
+                            {select && (
+                                <TableCell key="editar">
+                                    <Checkbox
+                                        checked={false}
+                                        onChange={selectAction(row)}
+                                        inputProps={{ 'aria-labelledby': 'labelId' }}
+                                    />
+                                </TableCell>
+                            )}
                         </TableRow>
                     ))}
                 </TableBody>
@@ -92,8 +106,10 @@ SimpleTable.propTypes = {
     ]),
     removeAction: PropTypes.func,
     editAction: PropTypes.func,
+    selectAction: PropTypes.func,
     remove: PropTypes.bool,
     edit: PropTypes.bool,
+    select: PropTypes.bool,
 };
 
 SimpleTable.defaultProps = {
@@ -101,8 +117,10 @@ SimpleTable.defaultProps = {
     width: '60%',
     removeAction: () => {},
     editAction: () => {},
+    selectAction: () => {},
     remove: false,
     edit: false,
+    select: false,
 };
 
 export const PaginatedTable = ({ items, columns, onSelectRow, width, remove, removeAction, edit, editAction }) => {

@@ -37,7 +37,7 @@ const Candidates = ({ match, onUpdateProject, setLoading, fetchCandidates }) => 
 
     useEffect(() => {
         handleFetchCandidates(recruitmentId);
-    }, [handleFetchCandidates]);
+    }, [handleFetchCandidates, recruitmentId]);
 
     const handleSendClick = useCallback(() => {
         setLoading(LOADING);

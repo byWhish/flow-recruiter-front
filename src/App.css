@@ -4,6 +4,7 @@
     height: 100%;
     position: absolute;
     display: flex;
+    background-color: darkslategrey;
 }
 
 .App-logo {

@@ -1,15 +1,31 @@
 import axios from 'axios';
+import { addMinutes } from 'date-fns';
 import Logger from '../context/Logger';
 import { config } from '../context/config';
 import Project from '../controllers/Project';
 
 const processProjects = projects => projects.map(item => Project.build(item));
 
+const generatreBlocks = scheduleList => scheduleList.map((schedule) => {
+    const { init, end, duration, date } = schedule;
+    const totalMinutes = (end - init) * 60;
+    const blockAmount = totalMinutes / duration;
+    schedule.blocks = [];
+    for (let i = 0; i < blockAmount; i++) {
+        const block = {
+            order: i,
+            time: addMinutes(date, (init * 60) + (i * duration)),
+        };
+        schedule.blocks.push(block);
+    }
+    return schedule;
+});
+
 const postProject = ({ project, schedulesList }) => {
     const endpoint = `${config.apiUrl}/api/private/project/add`;
     const data = {
         ...project,
-        schedules: schedulesList,
+        schedules: generatreBlocks(schedulesList),
         timestamp: new Date(),
     };
 
