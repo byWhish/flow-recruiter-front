@@ -19,17 +19,22 @@ const Sidebar = () => {
             <div className={clsx([styles.menu], { [styles.show]: show })} onClick={handleCloseClick} onMouseLeave={handleCloseClick} role="button" tabIndex={0}>
                 <Link to="/home">
                     <div className={styles.menuItem}>
-                        <span>Home</span>
+                        <span>Inicio</span>
                     </div>
                 </Link>
                 <Link to="/projects/create">
                     <div className={styles.menuItem}>
-                        <span>New project</span>
+                        <span>Nuevo proyecto</span>
                     </div>
                 </Link>
                 <Link to="/projects/all">
                     <div className={styles.menuItem}>
-                        <span>Projects</span>
+                        <span>Proyectos</span>
+                    </div>
+                </Link>
+                <Link to="/candidates/all">
+                    <div className={styles.menuItem}>
+                        <span>Candidatos</span>
                     </div>
                 </Link>
             </div>

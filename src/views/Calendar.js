@@ -23,11 +23,12 @@ const Calendar = ({ location }) => {
     const queryParams = queryString.parse(search);
     const [day, setDay] = useState(null);
     const [days, setDays] = useState([]);
+    const [dayLabel, setDayLabel] = useState(null);
     const [loading, setLoading] = useState(UNLOAD);
 
     const fetchSchedules = useCallback(() => {
         setLoading(LOADING);
-        AppointmentService.fetchGuestConfirmPublic(queryParams.id)
+        AppointmentService.fetchGuestConfirmPublic(queryParams.id, true)
             .then((response) => {
                 setDays(response);
                 setLoading(DONE);
@@ -37,8 +38,9 @@ const Calendar = ({ location }) => {
 
     const onChangeDay = useCallback(() => (event) => {
         const { value } = event.target;
-        setDay(value);
-    }, []);
+        setDay(days[value - 1]);
+        setDayLabel(value);
+    }, [days]);
 
     const handleBlockSelect = useCallback(item => () => {
         setLoading(LOADING);
@@ -53,7 +55,7 @@ const Calendar = ({ location }) => {
 
     return (
         <div className={styles.calendar}>
-            <SelectMaterial label="Elige una fecha" value={day} items={days} onChange={onChangeDay} />
+            <SelectMaterial label="Elige una fecha" value={dayLabel} items={days} onChange={onChangeDay} />
             <div className={styles.schedules}>
                 {day ? <SimpleTable columns={columns} rows={day.blocks} select selectAction={handleBlockSelect} /> : null}
             </div>

@@ -12,6 +12,7 @@ import LoadingModal from '../components/uikit/LoadingModal';
 import { ProjectService } from '../Services/ProjectService';
 import { DONE, LOADING, UNLOAD } from '../context/config';
 import { CandidateService } from '../Services/CandidateService';
+import ProjectCalendar from "./ProjectCalendar";
 
 const emptyProject = {
     name: '',
@@ -64,6 +65,7 @@ const ProjectNavBar = ({ match }) => {
                     <NavLink enabled={project.hasFormMail} tab={{ to: `/candidates/${project.id}/invite`, label: 'Candidatos' }} index={3} onActive={setActiveTab} active={activeTab} />
                     <NavLink enabled={project.hasInterested} tab={{ to: `/mail/${project.id}/invite`, label: 'Mail invitacion' }} index={4} onActive={setActiveTab} active={activeTab} />
                     <NavLink enabled={project.hasInvitationMail} tab={{ to: `/interested/${project.id}/summon`, label: 'Interesados' }} index={5} onActive={setActiveTab} active={activeTab} />
+                    <NavLink enabled={project.hasInvitationMail} tab={{ to: `/calendar/${project.id}`, label: 'Calendario' }} index={6} onActive={setActiveTab} active={activeTab} />
                 </div>
                 <Switch>
                     <PropsRoute exact path="/" component={Project} onUpdateProject={handleUpdateProject} setLoading={setLoading} edit={edit} project={project} />
@@ -71,6 +73,7 @@ const ProjectNavBar = ({ match }) => {
                     <PropsRoute exact path="/interested/:recruitmentId/:type" component={Candidates} fetchCandidates={fetchAllInterested} onUpdateProject={handleUpdateProject} setLoading={setLoading} edit={edit} />
                     <PropsRoute exact path="/mail/:recruitmentId/:type" component={Mail} onUpdateProject={handleUpdateProject} setLoading={setLoading} edit={edit} project={project} />
                     <PropsRoute exact path="/dynamicForm/:recruitmentId" component={DynForm} onUpdateProject={handleUpdateProject} setLoading={setLoading} edit={edit} project={project} />
+                    <PropsRoute exact path="/calendar/:recruitmentId" component={ProjectCalendar} onUpdateProject={handleUpdateProject} setLoading={setLoading} edit={edit} project={project} />
                 </Switch>
             </MemoryRouter>
             <LoadingModal state={loading} />

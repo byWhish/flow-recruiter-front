@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { format } from 'date-fns';
 import { PaginatedTable } from '../components/table/Tables';
 import { ProjectService } from '../Services/ProjectService';
 import styles from './ProjectList.module.css';
@@ -10,15 +11,15 @@ import history from '../context/History';
 const columns = [
     {
         id: 'timestamp',
-        label: 'Fecha de creacion',
+        label: 'Creado',
         minWidth: 50,
         align: 'left',
-        format: value => new Date(...value).toLocaleString(),
+        format: value => format(new Date(...value), 'dd/MM/yyyy'),
     },
     {
         id: 'name',
         label: 'Nombre',
-        minWidth: 120,
+        minWidth: 100,
         align: 'left',
     },
     {
@@ -36,18 +37,35 @@ const columns = [
         format: value => (value ? <CheckIcon /> : <CloseIcon />),
     },
     {
+        id: 'formVisited',
+        label: 'Form visitados',
+        minWidth: 50,
+        align: 'center',
+    },
+    {
         id: 'interested',
         label: 'Interesados',
         minWidth: 50,
         align: 'center',
-        // format: value => (value ? <CheckIcon /> : <CloseIcon />),
     },
     {
         id: 'hasInvitationMail',
-        label: 'Invitation Mail',
+        label: 'Mail invitacion',
         minWidth: 50,
         align: 'center',
         format: value => (value ? <CheckIcon /> : <CloseIcon />),
+    },
+    {
+        id: 'calendarVisited',
+        label: 'Confirm. visitados',
+        minWidth: 50,
+        align: 'center',
+    },
+    {
+        id: 'confirmed',
+        label: 'Confirmados',
+        minWidth: 50,
+        align: 'center',
     },
 ];
 

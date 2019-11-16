@@ -8,6 +8,7 @@ import ProjectList from './views/ProjectList';
 import Sidebar from './components/menu/SideBar';
 import Form from './views/Form';
 import Calendar from './views/Calendar';
+import CandidatesList from './views/CandidatesList';
 
 const App = () => (
     <div className="App">
@@ -23,6 +24,7 @@ const App = () => (
                     <Route exact path="/projects/create" component={ProjectNavBar} />
                     <Route exact path="/projects/edit/:recruitmentId" component={ProjectNavBar} />
                     <Route exact path="/projects/all" component={ProjectList} />
+                    <Route exact path="/candidates/all" component={CandidatesList} />
                     <Redirect to="/404" />
                 </Switch>
             </Route>

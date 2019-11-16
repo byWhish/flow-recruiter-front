@@ -1,5 +1,5 @@
 import Button from '@material-ui/core/Button';
-import React, {Fragment} from 'react';
+import React, { Fragment } from 'react';
 import * as PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
@@ -216,8 +216,8 @@ export const ListMaterial = ({ dense, items, onDeleteClick, width }) => (
 
 ListMaterial.propTypes = {
     onDeleteClick: PropTypes.func,
-}
+};
 
 ListMaterial.defaultProps = {
     onDeleteClick: () => {},
-}
+};

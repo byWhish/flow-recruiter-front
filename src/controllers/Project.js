@@ -24,6 +24,18 @@ class Project {
     get interested() {
         return this.invitations.filter(invitation => invitation.completed).length;
     }
+
+    get formVisited() {
+        return this.invitations.filter(invitation => invitation.visited).length;
+    }
+
+    get confirmed() {
+        return this.appointments.filter(appointment => appointment.confirmed).length;
+    }
+
+    get calendarVisited() {
+        return this.appointments.filter(appointment => appointment.visited).length;
+    }
 }
 
 export default Project;
