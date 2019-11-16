@@ -10,9 +10,9 @@ import Mail from './Mail';
 import DynForm from './DynForm';
 import LoadingModal from '../components/uikit/LoadingModal';
 import { ProjectService } from '../Services/ProjectService';
-import { DONE, LOADING, UNLOAD } from '../context/config';
+import { DONE, LOADING, UNLOAD, URLS } from '../context/config';
 import { CandidateService } from '../Services/CandidateService';
-import ProjectCalendar from "./ProjectCalendar";
+import ProjectCalendar from './ProjectCalendar';
 
 const emptyProject = {
     name: '',
@@ -26,6 +26,7 @@ const ProjectNavBar = ({ match }) => {
     const [loading, setLoading] = useState(UNLOAD);
     const { params: { recruitmentId } } = match;
     const [edit, setEdit] = useState(false);
+    const { root, candidates, interested, mails, dynForm, calendar } = URLS;
 
     const handleUpdateProject = useCallback((newProject) => {
         setProject(newProject);
@@ -68,12 +69,12 @@ const ProjectNavBar = ({ match }) => {
                     <NavLink enabled={project.hasInvitationMail} tab={{ to: `/calendar/${project.id}`, label: 'Calendario' }} index={6} onActive={setActiveTab} active={activeTab} />
                 </div>
                 <Switch>
-                    <PropsRoute exact path="/" component={Project} onUpdateProject={handleUpdateProject} setLoading={setLoading} edit={edit} project={project} />
-                    <PropsRoute exact path="/candidates/:recruitmentId/:type" component={Candidates} fetchCandidates={fetchAllCandidates} onUpdateProject={handleUpdateProject} setLoading={setLoading} edit={edit} />
-                    <PropsRoute exact path="/interested/:recruitmentId/:type" component={Candidates} fetchCandidates={fetchAllInterested} onUpdateProject={handleUpdateProject} setLoading={setLoading} edit={edit} />
-                    <PropsRoute exact path="/mail/:recruitmentId/:type" component={Mail} onUpdateProject={handleUpdateProject} setLoading={setLoading} edit={edit} project={project} />
-                    <PropsRoute exact path="/dynamicForm/:recruitmentId" component={DynForm} onUpdateProject={handleUpdateProject} setLoading={setLoading} edit={edit} project={project} />
-                    <PropsRoute exact path="/calendar/:recruitmentId" component={ProjectCalendar} onUpdateProject={handleUpdateProject} setLoading={setLoading} edit={edit} project={project} />
+                    <PropsRoute exact path={root} component={Project} onUpdateProject={handleUpdateProject} setLoading={setLoading} edit={edit} project={project} />
+                    <PropsRoute exact path={candidates} component={Candidates} fetchCandidates={fetchAllCandidates} onUpdateProject={handleUpdateProject} setLoading={setLoading} edit={edit} />
+                    <PropsRoute exact path={interested} component={Candidates} fetchCandidates={fetchAllInterested} onUpdateProject={handleUpdateProject} setLoading={setLoading} edit={edit} />
+                    <PropsRoute exact path={mails} component={Mail} onUpdateProject={handleUpdateProject} setLoading={setLoading} edit={edit} project={project} />
+                    <PropsRoute exact path={dynForm} component={DynForm} onUpdateProject={handleUpdateProject} setLoading={setLoading} edit={edit} project={project} />
+                    <PropsRoute exact path={calendar} component={ProjectCalendar} onUpdateProject={handleUpdateProject} setLoading={setLoading} edit={edit} project={project} />
                 </Switch>
             </MemoryRouter>
             <LoadingModal state={loading} />
