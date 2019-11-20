@@ -49,6 +49,13 @@ module.exports = {
                         test: /\.worker\.js$/,
                         use: { loader: 'worker-loader' },
                     });
+                    webpackConfig.module.rules.push({
+                        test: /\.js$/,
+                        exclude: /node_modules/,
+                        use: {
+                            loader: 'babel-loader',
+                        },
+                    });
                     return webpackConfig;
                 },
             },
