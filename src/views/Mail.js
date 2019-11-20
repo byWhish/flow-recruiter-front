@@ -22,7 +22,7 @@ const initialState = {
     label: '',
 };
 
-const Mail = ({ match, onUpdateProject, setLoading, edit, project }) => {
+const Mail = ({ match, onUpdateProject, setLoading, edit, project, setNextTab, history }) => {
     const { params: { type, recruitmentId } } = match;
     const [mail, dispatch] = useReducer(reducer, initialState);
     const [errors, validate] = useValidate([minStrLength(4), empty]);
@@ -38,7 +38,9 @@ const Mail = ({ match, onUpdateProject, setLoading, edit, project }) => {
             ProjectService.saveMail(mail, recruitmentId, type)
                 .then((response) => {
                     setLoading(DONE);
-                    return onUpdateProject(response);
+                    onUpdateProject(response);
+                    setNextTab();
+                    if (type === 'form') history.push(`/candidates/${project.id}/invite`); else history.push(`/interested/${project.id}/summon`);
                 });
         }
     }, [mail, onUpdateProject, recruitmentId, setLoading, type, validate]);

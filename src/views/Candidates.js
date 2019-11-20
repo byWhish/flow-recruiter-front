@@ -22,7 +22,7 @@ const columns = [
     },
 ];
 
-const Candidates = ({ match, onUpdateProject, setLoading, fetchCandidates, filtered }) => {
+const Candidates = ({ match, onUpdateProject, setLoading, fetchCandidates, filtered, project, setNextTab, history }) => {
     const [candidates, setCandidates] = useState([]);
     const [activeFilters, setActiveFilters] = useState(new Set());
     const [filters, setFilters] = useState([]);
@@ -86,7 +86,9 @@ const Candidates = ({ match, onUpdateProject, setLoading, fetchCandidates, filte
         FormInvitationService.inviteCandidates(candidates.filter(c => c.selected), recruitmentId, type)
             .then((response) => {
                 setLoading(DONE);
-                return onUpdateProject(response);
+                onUpdateProject(response);
+                setNextTab();
+                if (type === 'invite') history.push(`/mail/${project.id}/invite`); else history.push(`/calendar/${project.id}`);
             });
     }, [candidates, onUpdateProject, recruitmentId, setLoading, type]);
 

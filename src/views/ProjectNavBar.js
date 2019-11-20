@@ -46,6 +46,7 @@ const ProjectNavBar = ({ match }) => {
 
     const fetchAllInterested = useCallback(() => CandidateService.fetchInterested(recruitmentId), [recruitmentId]);
 
+    const setNextTab = useCallback(() => setActiveTab(activeTab + 1), [activeTab]);
 
     useEffect(() => {
         if (recruitmentId) {
@@ -69,12 +70,69 @@ const ProjectNavBar = ({ match }) => {
                     <NavLink enabled={project.hasSchedules} tab={{ to: `/calendar/${project.id}`, label: 'Calendario' }} index={6} onActive={setActiveTab} active={activeTab} />
                 </div>
                 <Switch>
-                    <PropsRoute exact path={root} component={Project} onUpdateProject={handleUpdateProject} setLoading={setLoading} edit={edit} project={project} />
-                    <PropsRoute exact path={candidates} component={Candidates} fetchCandidates={fetchAllCandidates} onUpdateProject={handleUpdateProject} setLoading={setLoading} edit={edit} />
-                    <PropsRoute exact path={interested} component={Candidates} fetchCandidates={fetchAllInterested} onUpdateProject={handleUpdateProject} setLoading={setLoading} edit={edit} filtered />
-                    <PropsRoute exact path={mails} component={Mail} onUpdateProject={handleUpdateProject} setLoading={setLoading} edit={edit} project={project} />
-                    <PropsRoute exact path={dynForm} component={DynForm} onUpdateProject={handleUpdateProject} setLoading={setLoading} edit={edit} project={project} />
-                    <PropsRoute exact path={calendar} component={ProjectCalendar} onUpdateProject={handleUpdateProject} setLoading={setLoading} edit={edit} project={project} />
+                    <PropsRoute
+                        exact
+                        path={root}
+                        component={Project}
+                        onUpdateProject={handleUpdateProject}
+                        setLoading={setLoading}
+                        edit={edit}
+                        project={project}
+                        setNextTab={setNextTab}
+                    />
+                    <PropsRoute
+                        exact
+                        path={candidates}
+                        component={Candidates}
+                        fetchCandidates={fetchAllCandidates}
+                        onUpdateProject={handleUpdateProject}
+                        setLoading={setLoading}
+                        setNextTab={setNextTab}
+                        edit={edit}
+                        project={project}
+                        setNextTab={setNextTab}
+                    />
+                    <PropsRoute
+                        exact
+                        path={interested}
+                        component={Candidates}
+                        fetchCandidates={fetchAllInterested}
+                        onUpdateProject={handleUpdateProject}
+                        setLoading={setLoading}
+                        edit={edit}
+                        project={project}
+                        setNextTab={setNextTab}
+                        filtered
+                    />
+                    <PropsRoute
+                        exact
+                        path={mails}
+                        component={Mail}
+                        onUpdateProject={handleUpdateProject}
+                        setLoading={setLoading}
+                        edit={edit}
+                        project={project}
+                        setNextTab={setNextTab}
+                    />
+                    <PropsRoute
+                        exact
+                        path={dynForm}
+                        component={DynForm}
+                        onUpdateProject={handleUpdateProject}
+                        setLoading={setLoading}
+                        edit={edit}
+                        project={project}
+                        setNextTab={setNextTab}
+                    />
+                    <PropsRoute
+                        exact
+                        path={calendar}
+                        component={ProjectCalendar}
+                        onUpdateProject={handleUpdateProject}
+                        setLoading={setLoading}
+                        edit={edit}
+                        project={project}
+                    />
                 </Switch>
             </MemoryRouter>
             <LoadingModal state={loading} />

@@ -4,6 +4,7 @@ import { format, startOfDay } from 'date-fns';
 import styles from './Project.module.css';
 import { ButtonMaterial, DateMaterial, InputMaterial, SelectMaterial, TimeSlider } from '../components/uikit/UIkit';
 import { SimpleTable } from '../components/table/Tables';
+import history from '../context/History';
 import useValidate, { empty, minArrayLength, minDate, minStrLength } from '../context/validate';
 import { ProjectService } from '../Services/ProjectService';
 import { DONE, LOADING } from '../context/config';
@@ -93,7 +94,7 @@ const arrayReducer = (state, action) => {
     }
 };
 
-const Project = ({ onUpdateProject, setLoading, edit, project }) => {
+const Project = ({ onUpdateProject, setLoading, edit, project, setNextTab, history }) => {
     const [state, dispatch] = useReducer(reducer, initialState);
     const [schedule, dispatchSchedule] = useReducer(reducer, initialSchedule);
     const [list, dispatchList] = useReducer(arrayReducer, []);
@@ -117,10 +118,12 @@ const Project = ({ onUpdateProject, setLoading, edit, project }) => {
             ProjectService.postProject({ project: state, schedulesList: list })
                 .then((response) => {
                     setLoading(DONE);
-                    return onUpdateProject(response);
+                    onUpdateProject(response);
+                    setNextTab();
+                    history.push(`/dynamicForm/${project.id}`);
                 });
         }
-    }, [list, onUpdateProject, setLoading, state, validate]);
+    }, [list, onUpdateProject, setLoading, setNextTab, state, validate]);
 
     const handleAddScheduleClick = useCallback(() => {
         if (validate({ date: schedule.date })) {

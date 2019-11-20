@@ -60,7 +60,7 @@ const processQuestions = questions => questions.map(question => (question.option
     ? { question: question.label, options: question.options, Component: MultipleQuestion, type: 'multi' }
     : { question: question.label, Component: SimpleQuestion, type: 'simple' }));
 
-const DynForm = ({ onUpdateProject, match, setLoading, edit, project }) => {
+const DynForm = ({ onUpdateProject, match, setLoading, edit, project, setNextTab, history }) => {
     const classes = useStyles();
     const { params: { recruitmentId } } = match;
     const [questions, dispatchQuestion] = useReducer(reducer, initialState);
@@ -99,7 +99,9 @@ const DynForm = ({ onUpdateProject, match, setLoading, edit, project }) => {
             FormService.postForm({ form: { title, questions: Array.from(questions).map(([, q]) => q) }, recruitmentId })
                 .then((response) => {
                     setLoading(DONE);
-                    return onUpdateProject(response);
+                    onUpdateProject(response);
+                    setNextTab();
+                    history.push(`/mail/${project.id}/form`);
                 });
         }
     }, [onUpdateProject, questions, recruitmentId, setLoading, title, validate]);

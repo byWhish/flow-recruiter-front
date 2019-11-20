@@ -29,7 +29,7 @@ const columns = [
 ];
 
 const ProjectCalendar = ({ project }) => {
-    const schedules = useMemo(() => project.schedules.reduce((prev, current) => [...prev, ...current.blocks], []), [project.schedules]);
+    const schedules = useMemo(() => project.schedules.reduce((prev, current) => [...prev, ...current.blocks.sort((a, b) => a.id - b.id)], []), [project.schedules]);
 
     return (
         <div className={styles.calendar}>
