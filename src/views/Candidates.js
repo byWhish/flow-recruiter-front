@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import styles from './Candidates.module.css';
-import CandidateService from '../Services/CandidateService';
 import { PaginatedTable } from '../components/table/Tables';
 import FormInvitationService from '../Services/FormInvitationService';
-import { ButtonMaterial } from '../components/uikit/UIkit';
+import { AutocompleteMaterial, ButtonMaterial, PillList } from '../components/uikit/UIkit';
 import { DONE, LOADING } from '../context/config';
+import FilterService from '../Services/FiltersService';
+import { CandidateService } from '../Services/CandidateService';
 
 const columns = [
     {
@@ -21,8 +22,13 @@ const columns = [
     },
 ];
 
-const Candidates = ({ match, onUpdateProject, setLoading, fetchCandidates }) => {
+const Candidates = ({ match, onUpdateProject, setLoading, fetchCandidates, filtered }) => {
     const [candidates, setCandidates] = useState([]);
+    const [activeFilters, setActiveFilters] = useState(new Set());
+    const [filters, setFilters] = useState([]);
+    const [filter, setFilter] = useState('');
+    const [options, setOptions] = useState([]);
+    const [option, setOption] = useState('');
 
     const { params: { type, recruitmentId } } = match;
 
@@ -33,18 +39,54 @@ const Candidates = ({ match, onUpdateProject, setLoading, fetchCandidates }) => 
                 setCandidates(result);
                 setLoading(DONE);
             });
+        FilterService.fetchFilters()
+            .then(result => setFilters(result));
     }, [fetchCandidates, setLoading]);
 
+    const handleFilterChange = useCallback((target, value) => {
+        setFilter(value);
+        if (filters.includes(value)) {
+            FilterService.fetchOptions(value)
+                .then(response => setOptions(response));
+        }
+    }, [filters]);
+
+    const handleOptionChange = useCallback((target, value) => {
+        setOption(value);
+    }, []);
+
+    const fetchFiltered = useCallback((filters, recruitmentId) => {
+        setLoading(LOADING);
+        CandidateService.fetchFiltered(filters, recruitmentId)
+            .then((response) => {
+                setCandidates(response);
+                setLoading(DONE);
+            });
+    }, [setLoading]);
+
+    const handleAddFilter = useCallback(() => {
+        const result = new Set(activeFilters);
+        result.add(option);
+        setActiveFilters(result);
+    }, [activeFilters, option]);
+
+    const handleDeleteActive = useCallback(value => () => {
+        const result = new Set(activeFilters);
+        result.delete(value);
+        setActiveFilters(result);
+    }, [activeFilters]);
+
     useEffect(() => {
-        handleFetchCandidates(recruitmentId);
-    }, [handleFetchCandidates, recruitmentId]);
+        if (activeFilters.size > 0) fetchFiltered([...Array.from(activeFilters)], filtered ? recruitmentId : '');
+        else handleFetchCandidates();
+    }, [activeFilters, handleFetchCandidates, fetchFiltered, filtered, recruitmentId]);
 
     const handleSendClick = useCallback(() => {
         setLoading(LOADING);
         FormInvitationService.inviteCandidates(candidates.filter(c => c.selected), recruitmentId, type)
             .then((response) => {
                 setLoading(DONE);
-                onUpdateProject(response);
+                return onUpdateProject(response);
             });
     }, [candidates, onUpdateProject, recruitmentId, setLoading, type]);
 
@@ -56,6 +98,14 @@ const Candidates = ({ match, onUpdateProject, setLoading, fetchCandidates }) => 
 
     return (
         <div className={styles.candidates}>
+            <div className={styles.filtersWrapper}>
+                <AutocompleteMaterial options={filters} handleChange={handleFilterChange} value={filter} label="Selecciona filtro" />
+                <AutocompleteMaterial options={options} handleChange={handleOptionChange} value={option} label="Selecciona opcion" />
+                <ButtonMaterial caption="Agregar Filtro" onClick={handleAddFilter} />
+            </div>
+            <div className={styles.pillsWrapper}>
+                <PillList items={Array.from(activeFilters)} onDelete={handleDeleteActive} />
+            </div>
             <PaginatedTable items={candidates} columns={columns} onSelectRow={handleSelectRow} />
             <ButtonMaterial onClick={handleSendClick} caption="Enviar email" />
         </div>

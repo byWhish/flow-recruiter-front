@@ -2,7 +2,7 @@
     position: fixed;
     width: 64px;
     height: 64px;
-    z-index: 2;
+    z-index: 3;
 }
 
 .menuButton {

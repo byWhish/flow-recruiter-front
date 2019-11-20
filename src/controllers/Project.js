@@ -17,6 +17,10 @@ class Project {
         return !!this.invitationMail;
     }
 
+    get hasSchedules() {
+        return this.schedules.length;
+    }
+
     get hasInterested() {
         return this.invitations.find(invitation => invitation.completed);
     }

@@ -66,12 +66,12 @@ const ProjectNavBar = ({ match }) => {
                     <NavLink enabled={project.hasFormMail} tab={{ to: `/candidates/${project.id}/invite`, label: 'Candidatos' }} index={3} onActive={setActiveTab} active={activeTab} />
                     <NavLink enabled={project.hasInterested} tab={{ to: `/mail/${project.id}/invite`, label: 'Mail invitacion' }} index={4} onActive={setActiveTab} active={activeTab} />
                     <NavLink enabled={project.hasInvitationMail} tab={{ to: `/interested/${project.id}/summon`, label: 'Interesados' }} index={5} onActive={setActiveTab} active={activeTab} />
-                    <NavLink enabled={project.hasInvitationMail} tab={{ to: `/calendar/${project.id}`, label: 'Calendario' }} index={6} onActive={setActiveTab} active={activeTab} />
+                    <NavLink enabled={project.hasSchedules} tab={{ to: `/calendar/${project.id}`, label: 'Calendario' }} index={6} onActive={setActiveTab} active={activeTab} />
                 </div>
                 <Switch>
                     <PropsRoute exact path={root} component={Project} onUpdateProject={handleUpdateProject} setLoading={setLoading} edit={edit} project={project} />
                     <PropsRoute exact path={candidates} component={Candidates} fetchCandidates={fetchAllCandidates} onUpdateProject={handleUpdateProject} setLoading={setLoading} edit={edit} />
-                    <PropsRoute exact path={interested} component={Candidates} fetchCandidates={fetchAllInterested} onUpdateProject={handleUpdateProject} setLoading={setLoading} edit={edit} />
+                    <PropsRoute exact path={interested} component={Candidates} fetchCandidates={fetchAllInterested} onUpdateProject={handleUpdateProject} setLoading={setLoading} edit={edit} filtered />
                     <PropsRoute exact path={mails} component={Mail} onUpdateProject={handleUpdateProject} setLoading={setLoading} edit={edit} project={project} />
                     <PropsRoute exact path={dynForm} component={DynForm} onUpdateProject={handleUpdateProject} setLoading={setLoading} edit={edit} project={project} />
                     <PropsRoute exact path={calendar} component={ProjectCalendar} onUpdateProject={handleUpdateProject} setLoading={setLoading} edit={edit} project={project} />

@@ -2,6 +2,14 @@ import axios from 'axios';
 import Logger from '../context/Logger';
 import { config } from '../context/config';
 
+const fetchFiltered = (filters, recruitmentId = '') => {
+    const endpoint = `${config.apiUrl}/api/private/candidate/filtered?filters=${filters.join(',')}&recruitmentId=${recruitmentId}`;
+
+    return axios.get(endpoint)
+        .then(response => response.data)
+        .catch(error => Logger.of('fetchCandidates').error('error:', error));
+};
+
 const fetchCandidates = () => {
     const endpoint = `${config.apiUrl}/api/private/candidate/all`;
     return axios.get(endpoint)
@@ -14,7 +22,7 @@ const fetchInterested = (recruitmentId) => {
     return axios.get(endpoint)
         .then(response => response.data)
         .catch(error => Logger.of('fetchCandidates').error('error:', error));
-}
+};
 
 const fetchAnswers = () => {
     const endpoint = `${config.apiUrl}/api/private/form/answer/all`;
@@ -25,9 +33,9 @@ const fetchAnswers = () => {
 
 
 export const CandidateService = {
-    fetchCandidates, fetchAnswers, fetchInterested,
+    fetchCandidates, fetchAnswers, fetchInterested, fetchFiltered,
 };
 
 export default {
-    fetchCandidates, fetchAnswers, fetchInterested,
+    fetchCandidates, fetchAnswers, fetchInterested, fetchFiltered,
 };

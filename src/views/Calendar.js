@@ -4,9 +4,10 @@ import { format } from 'date-fns';
 import { SelectMaterial } from '../components/uikit/UIkit';
 import styles from './Calendar.module.css';
 import LoadingModal from '../components/uikit/LoadingModal';
-import { DONE, ERROR, LOADING, UNLOAD } from '../context/config';
+import { DONE, ERROR, LOADING, UNLOAD, URLS } from '../context/config';
 import { AppointmentService } from '../Services/AppointmentService';
 import { SimpleTable } from '../components/table/Tables';
+import history from '../context/History';
 
 const columns = [
     {
@@ -20,8 +21,9 @@ const columns = [
 
 const Calendar = ({ location }) => {
     const { search } = location;
+    const { thanks } = URLS;
     const queryParams = queryString.parse(search);
-    const [day, setDay] = useState(null);
+    const [day, setDay] = useState('');
     const [days, setDays] = useState([]);
     const [dayLabel, setDayLabel] = useState(null);
     const [loading, setLoading] = useState(UNLOAD);
@@ -45,9 +47,12 @@ const Calendar = ({ location }) => {
     const handleBlockSelect = useCallback(item => () => {
         setLoading(LOADING);
         AppointmentService.postSelectedBlock(queryParams.id, day.id, item.id)
-            .then(() => { setLoading(DONE); })
+            .then(() => {
+                setLoading(DONE);
+                history.push(thanks);
+            })
             .catch(() => { setLoading(ERROR); });
-    }, [day, queryParams]);
+    }, [day.id, queryParams.id, thanks]);
 
     useEffect(() => {
         fetchSchedules(queryParams.id);

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import Logger from '../context/Logger';
 import { config } from '../context/config';
+import Project from '../controllers/Project';
 
 const inviteCandidates = (candidates, recruitmentId, type) => {
     const endpoint = `${config.apiUrl}/api/private/mail/${recruitmentId}/${type}`;
@@ -8,17 +9,17 @@ const inviteCandidates = (candidates, recruitmentId, type) => {
     const data = candidates;
 
     return axios.post(endpoint, data)
-        .then(response => response.data)
+        .then(response => Project.build(response.data))
         .catch(error => Logger.of('inviteCandidates').error('error:', error));
 };
 
-const sendForm = (questions, form) => {
+const sendForm = (questions, idLink, recruitmentId) => {
     const endpoint = `${config.apiUrl}/api/private/form/completed`;
 
     const data = {
-        id: form.id,
-        idLink: form.formLink,
-        questions: questions.map(item => ({ response: item.response, id: item.id })),
+        idLink,
+        questions: questions.map(item => ({ response: item.response, question: item.label })),
+        recruitmentId,
     };
 
     return axios.post(endpoint, data)

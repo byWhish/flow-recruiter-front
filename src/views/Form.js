@@ -5,8 +5,9 @@ import FormInvitationService from '../Services/FormInvitationService';
 import { ButtonMaterial } from '../components/uikit/UIkit';
 import { FinalMultipleQuestion, FinalSimpleQuestion } from '../components/dynForms/Questions';
 import LoadingModal from '../components/uikit/LoadingModal';
-import { DONE, ERROR, LOADING, UNLOAD } from '../context/config';
+import { DONE, ERROR, LOADING, UNLOAD, URLS } from '../context/config';
 import useValidate, { empty, minStrLength } from '../context/validate';
+import history from '../context/History';
 
 const reducer = (state, action) => {
     switch (action.type) {
@@ -23,32 +24,34 @@ const reducer = (state, action) => {
 
 const Form = ({ location }) => {
     const { search } = location;
+    const { thanks } = URLS;
     const queryParams = queryString.parse(search);
-    const [form, setForm] = useState(null);
     const [questions, dispatchQuestions] = useReducer(reducer, []);
     const [loading, setLoading] = useState(UNLOAD);
     const [errors, validate] = useValidate([minStrLength(2), empty]);
+    const [recruitmentId, setRecruitmentId] = useState(null);
 
     const handleChange = id => (event) => {
         dispatchQuestions({ type: 'update', id, value: event.target.value });
     };
 
-    const handleSendClick = () => {
+    const handleSendClick = useCallback(() => {
         if (questions.every(question => validate({ [question.id]: question.response }))) {
             setLoading(LOADING);
-            FormInvitationService.sendForm(questions, form)
+            FormInvitationService.sendForm(questions, queryParams.id, recruitmentId)
                 .then(() => {
                     setLoading(DONE);
+                    history.push(thanks);
                 });
         }
-    };
+    }, [queryParams.id, questions, recruitmentId, thanks, validate]);
 
     const fetchForm = useCallback(() => {
         setLoading(LOADING);
         FormInvitationService.getForm(queryParams.id)
             .then((response) => {
-                setForm(response);
                 dispatchQuestions({ type: 'replace', values: response.form.questions });
+                setRecruitmentId(response.recruitmentId);
                 setLoading(DONE);
             })
             .catch(() => { setLoading(ERROR); });

@@ -19,6 +19,10 @@ const useStyles = makeStyles({
         maxHeight: 600,
         overflow: 'auto',
     },
+    table: {
+        maxHeight: 600,
+        overflow: 'auto',
+    },
     errorTable: {
         color: 'red',
     },

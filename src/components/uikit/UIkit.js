@@ -21,6 +21,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Typography from '@material-ui/core/Typography';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import Chip from '@material-ui/core/Chip';
+
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -221,3 +224,24 @@ ListMaterial.propTypes = {
 ListMaterial.defaultProps = {
     onDeleteClick: () => {},
 };
+
+export const AutocompleteMaterial = ({ options, handleChange, value, label }) => (
+    <Autocomplete
+        id="combo-box-demo"
+        options={options}
+        value={value}
+        onChange={handleChange}
+        getOptionLabel={option => option}
+        style={{ width: 200, backgroundColor: 'white' }}
+        renderInput={params => (
+            <TextField {...params} label={label} variant="outlined" fullWidth />
+        )}
+    />
+);
+
+export const PillList = ({ items, onDelete }) => items.map(item => (
+    <Chip
+        label={item}
+        onDelete={onDelete(item)}
+    />
+));

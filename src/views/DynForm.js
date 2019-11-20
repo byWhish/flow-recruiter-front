@@ -71,13 +71,13 @@ const DynForm = ({ onUpdateProject, match, setLoading, edit, project }) => {
 
     const handleAddSimple = useCallback(() => {
         if (validate({ title, questions })) {
-            dispatchQuestion({ value: emptySimpleQuestion, type: 'add' });
+            dispatchQuestion({ value: { ...emptySimpleQuestion }, type: 'add' });
         }
     }, [questions, title, validate]);
 
     const handleAddMultiple = useCallback(() => {
         if (validate({ title, questions })) {
-            dispatchQuestion({ value: emptyMultipleQuestion, type: 'add' });
+            dispatchQuestion({ value: { ...emptyMultipleQuestion, options: [] }, type: 'add' });
         }
     }, [questions, title, validate]);
 
