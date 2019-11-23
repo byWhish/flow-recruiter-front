@@ -90,7 +90,6 @@ const ProjectNavBar = ({ match }) => {
                         setNextTab={setNextTab}
                         edit={edit}
                         project={project}
-                        setNextTab={setNextTab}
                     />
                     <PropsRoute
                         exact

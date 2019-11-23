@@ -26,6 +26,13 @@ const columns = [
         align: 'center',
         format: value => (value ? <CloseIcon /> : <CheckIcon />),
     },
+    {
+        id: 'candidate',
+        label: 'Candidato',
+        minWidth: 200,
+        align: 'center',
+        format: value => (value ? value.email : ''),
+    },
 ];
 
 const ProjectCalendar = ({ project }) => {

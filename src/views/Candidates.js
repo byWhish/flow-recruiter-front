@@ -86,8 +86,8 @@ const Candidates = ({ match, onUpdateProject, setLoading, fetchCandidates, filte
         FormInvitationService.inviteCandidates(candidates.filter(c => c.selected), recruitmentId, type)
             .then((response) => {
                 setLoading(DONE);
-                onUpdateProject(response);
-                setNextTab();
+                // onUpdateProject(response);
+                // setNextTab();
                 if (type === 'invite') history.push(`/mail/${project.id}/invite`); else history.push(`/calendar/${project.id}`);
             });
     }, [candidates, onUpdateProject, recruitmentId, setLoading, type]);
