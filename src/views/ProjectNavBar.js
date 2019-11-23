@@ -134,7 +134,7 @@ const ProjectNavBar = ({ match }) => {
                     />
                 </Switch>
             </MemoryRouter>
-            <LoadingModal state={loading} />
+            <LoadingModal state={loading} setState={setLoading} />
         </div>
 
     );

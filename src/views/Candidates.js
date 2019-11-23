@@ -3,7 +3,7 @@ import styles from './Candidates.module.css';
 import { PaginatedTable } from '../components/table/Tables';
 import FormInvitationService from '../Services/FormInvitationService';
 import { AutocompleteMaterial, ButtonMaterial, PillList } from '../components/uikit/UIkit';
-import { DONE, LOADING } from '../context/config';
+import {CONFIRMED, DONE, LOADING} from '../context/config';
 import FilterService from '../Services/FiltersService';
 import { CandidateService } from '../Services/CandidateService';
 
@@ -85,7 +85,7 @@ const Candidates = ({ match, onUpdateProject, setLoading, fetchCandidates, filte
         setLoading(LOADING);
         FormInvitationService.inviteCandidates(candidates.filter(c => c.selected), recruitmentId, type)
             .then((response) => {
-                setLoading(DONE);
+                setLoading(CONFIRMED);
                 onUpdateProject(response);
                 // if (type === 'invite') {
                 //     history.push(`/mail/${project.id}/invite`);

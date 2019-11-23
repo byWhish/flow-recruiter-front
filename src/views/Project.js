@@ -7,7 +7,7 @@ import { SimpleTable } from '../components/table/Tables';
 import history from '../context/History';
 import useValidate, { empty, minArrayLength, minDate, minStrLength } from '../context/validate';
 import { ProjectService } from '../Services/ProjectService';
-import { DONE, LOADING } from '../context/config';
+import {CONFIRMED, DONE, LOADING} from '../context/config';
 
 const initialState = {
     name: '',

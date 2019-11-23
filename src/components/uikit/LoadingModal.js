@@ -1,9 +1,11 @@
 import React from 'react';
+import { Typography } from '@material-ui/core';
 import Loading from './Loading';
 import styles from './LoadingModal.module.css';
-import { DONE, ERROR, LOADING } from '../../context/config';
+import { CONFIRMED, ERROR, LOADING, UNLOAD } from '../../context/config';
+import { ButtonMaterial } from './UIkit';
 
-const LoadingModal = ({ state }) => {
+const LoadingModal = ({ state, setState }) => {
     switch (state) {
         case LOADING:
             return (
@@ -11,8 +13,15 @@ const LoadingModal = ({ state }) => {
                     <Loading />
                 </div>
             );
-        case DONE:
-            return null;
+        case CONFIRMED:
+            return (
+                <div className={styles.loadingModal}>
+                    <div className={styles.confirmed}>
+                        <Typography>Accion realizada con exito</Typography>
+                        <ButtonMaterial caption="Hecho" onClick={() => setState(UNLOAD)} />
+                    </div>
+                </div>
+            );
         case ERROR:
             return (
                 <div className={styles.loadingModal}>

@@ -26,4 +26,5 @@ export const URLS = {
 export const LOADING = 'loading';
 export const DONE = 'done';
 export const UNLOAD = 'unload';
+export const CONFIRMED = 'confirmed';
 export const ERROR = 'error';
