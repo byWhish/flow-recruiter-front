@@ -96,7 +96,7 @@ const DynForm = ({ onUpdateProject, match, setLoading, edit, project, setNextTab
     const handlePostForm = useCallback(() => {
         if (validate({ title, questions })) {
             setLoading(LOADING);
-            FormService.postForm({ form: { title, questions: Array.from(questions).map(([, q]) => q) }, recruitmentId })
+            FormService.postForm({ form: { title, questions: Array.from(questions).map(([, q]) => q) }, recruitmentId: project.id })
                 .then((response) => {
                     setLoading(DONE);
                     onUpdateProject(response);
@@ -104,7 +104,7 @@ const DynForm = ({ onUpdateProject, match, setLoading, edit, project, setNextTab
                     history.push(`/mail/${project.id}/form`);
                 });
         }
-    }, [onUpdateProject, questions, recruitmentId, setLoading, title, validate]);
+    }, [history, onUpdateProject, project.id, questions, setLoading, setNextTab, title, validate]);
 
     useEffect(() => {
         if (edit && project.form) {

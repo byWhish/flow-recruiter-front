@@ -8,6 +8,7 @@ import LoadingModal from '../components/uikit/LoadingModal';
 import { DONE, ERROR, LOADING, UNLOAD, URLS } from '../context/config';
 import useValidate, { empty, minStrLength } from '../context/validate';
 import history from '../context/History';
+import {Typography} from "@material-ui/core";
 
 const reducer = (state, action) => {
     switch (action.type) {
@@ -30,6 +31,7 @@ const Form = ({ location }) => {
     const [loading, setLoading] = useState(UNLOAD);
     const [errors, validate] = useValidate([minStrLength(2), empty]);
     const [recruitmentId, setRecruitmentId] = useState(null);
+    const [title, setTitle] = useState(null);
 
     const handleChange = id => (event) => {
         dispatchQuestions({ type: 'update', id, value: event.target.value });
@@ -51,6 +53,7 @@ const Form = ({ location }) => {
         FormInvitationService.getForm(queryParams.id)
             .then((response) => {
                 dispatchQuestions({ type: 'replace', values: response.form.questions });
+                setTitle(response.form.title);
                 setRecruitmentId(response.recruitmentId);
                 setLoading(DONE);
             })
@@ -63,6 +66,7 @@ const Form = ({ location }) => {
 
     return (
         <div className={styles.form}>
+            <Typography>{title}</Typography>
             <form className={styles.container} noValidate autoComplete="off">
                 {questions.map(question => (question.options
                     ? <FinalMultipleQuestion item={question} onChange={handleChange} error={errors[question.id]} />
