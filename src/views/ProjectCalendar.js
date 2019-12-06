@@ -3,6 +3,7 @@ import { format } from 'date-fns';
 import { SimpleTable } from '../components/table/Tables';
 import { CheckIcon, CloseIcon } from '../components/Icons/Icons';
 import styles from './ProjectCalendar.module.css';
+import Typography from "@material-ui/core/Typography";
 
 const columns = [
     {
@@ -40,6 +41,7 @@ const ProjectCalendar = ({ project }) => {
 
     return (
         <div className={styles.calendar}>
+            <Typography style={{ fontSize: '2rem' }}>Estado actual del calendario</Typography>
             <SimpleTable columns={columns} rows={schedules} />
         </div>
     );

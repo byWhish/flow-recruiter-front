@@ -1,6 +1,5 @@
 import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
-import Auth from '../../Services/Auth';
 import { URLS } from '../../context/config';
 
 const renderRouter = (component, ...rest) => {
@@ -8,8 +7,8 @@ const renderRouter = (component, ...rest) => {
     return React.createElement(component, props);
 };
 
-const PrivateRoute = ({ component, ...rest }) => {
-    if (!Auth.isLoggedIn()) return <Redirect to={{ pathname: URLS.login }} />;
+const PrivateRoute = ({ component, auth, ...rest }) => {
+    if (!auth.isLoggedIn()) return <Redirect to={{ pathname: URLS.login }} />;
 
     return (
         <Route

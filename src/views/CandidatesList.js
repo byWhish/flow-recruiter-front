@@ -58,9 +58,11 @@ const CandidatesList = () => {
     }, []);
 
     const handleAddFilter = useCallback(() => {
-        const result = new Set(activeFilters);
-        result.add(option);
-        setActiveFilters(result);
+        if (option) {
+            const result = new Set(activeFilters);
+            result.add(option);
+            setActiveFilters(result);
+        }
     }, [activeFilters, option]);
 
     const handleDeleteActive = useCallback(value => () => {

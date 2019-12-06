@@ -66,6 +66,7 @@ const Form = ({ location }) => {
 
     return (
         <div className={styles.form}>
+            <Typography style={{ fontSize: '2rem' }}>Favor de completar el formulario</Typography>
             <Typography>{title}</Typography>
             <form className={styles.container} noValidate autoComplete="off">
                 {questions.map(question => (question.options

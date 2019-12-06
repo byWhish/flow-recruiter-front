@@ -7,6 +7,7 @@ import { MultipleQuestion, SimpleQuestion } from '../components/dynForms/Questio
 import { FormService } from '../Services/FormService';
 import useValidate, { empty, minArrayLength, minStrLength } from '../context/validate';
 import { DONE, LOADING } from '../context/config';
+import Typography from "@material-ui/core/Typography";
 
 const initialState = new Map();
 
@@ -115,6 +116,7 @@ const DynForm = ({ onUpdateProject, match, setLoading, edit, project, setNextTab
 
     return (
         <div className={styles.questionList}>
+            <Typography style={{ fontSize: '2rem' }}>Formulario dinamico</Typography>
             <InputMaterial label="Titulo del formulario" value={title} onChange={handleTitleChange} error={errors.title} disabled={disabled} />
             <div>
                 {!disabled && <ButtonMaterial caption="+ Pregunta simple" onClick={handleAddSimple} />}

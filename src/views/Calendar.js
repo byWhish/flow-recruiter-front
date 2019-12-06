@@ -8,6 +8,7 @@ import { DONE, ERROR, LOADING, UNLOAD, URLS } from '../context/config';
 import { AppointmentService } from '../Services/AppointmentService';
 import { SimpleTable } from '../components/table/Tables';
 import history from '../context/History';
+import {Typography} from "@material-ui/core";
 
 const columns = [
     {
@@ -60,6 +61,7 @@ const Calendar = ({ location }) => {
 
     return (
         <div className={styles.calendar}>
+            {/*<Typography style={{ fontSize: '2rem' }}>Elija una fecha y un horario para la visita</Typography>*/}
             <SelectMaterial label="Elige una fecha" value={dayLabel} items={days} onChange={onChangeDay} />
             <div className={styles.schedules}>
                 {day ? <SimpleTable columns={columns} rows={day.blocks} select selectAction={handleBlockSelect} /> : null}

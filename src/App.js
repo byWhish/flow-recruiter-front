@@ -31,14 +31,14 @@ const App = () => {
                 <Route exact path={confirm} component={Calendar} />
                 <Route exact path={thanks} component={Thanks} />
                 <Route path={root}>
-                    <Route path={root} component={Sidebar} />
+                    <PropsRoute path={root} component={Sidebar} auth={auth0} />
                     <Switch>
-                        <PrivateRoute exact path={root} component={Home} />
-                        <PrivateRoute exact path={home} component={Home} />
-                        <PrivateRoute exact path={createProject} component={ProjectNavBar} />
-                        <PrivateRoute exact path={editProject} component={ProjectNavBar} />
-                        <PrivateRoute exact path={allProjects} component={ProjectList} />
-                        <PrivateRoute exact path={allCandidates} component={CandidatesList} />
+                        <PrivateRoute exact path={root} component={Home} auth={auth0} />
+                        <PrivateRoute exact path={home} component={Home} auth={auth0} />
+                        <PrivateRoute exact path={createProject} component={ProjectNavBar} auth={auth0} />
+                        <PrivateRoute exact path={editProject} component={ProjectNavBar} auth={auth0} />
+                        <PrivateRoute exact path={allProjects} component={ProjectList} auth={auth0} />
+                        <PrivateRoute exact path={allCandidates} component={CandidatesList} auth={auth0} />
                         <Redirect to={error404} />
                     </Switch>
                 </Route>

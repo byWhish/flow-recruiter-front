@@ -1,11 +1,15 @@
 import auth0 from 'auth0-js';
 import Cookies from 'universal-cookie';
+import {action, observable} from 'mobx';
 import history from '../context/History';
 import Logger from '../context/Logger';
 import { config } from '../context/config';
 
 export default class Auth {
-    userProfile;
+    @observable userProfile;
+    @observable accessToken;
+    @observable userName;
+    @observable userAvatar;
     auth0 = new auth0.WebAuth({
         domain: 'bywhish.auth0.com',
         clientID: 'OlXk8kUjCFU3DNYt6129nMCRxwOXGMAh',
@@ -14,7 +18,6 @@ export default class Auth {
         scope: 'openid profile email',
         audience: 'https://mybackend.com',
     });
-    accessToken;
     idToken;
     expiresAt;
 
@@ -32,16 +35,27 @@ export default class Auth {
         this.auth0.authorize();
     }
 
-    static isLoggedIn() {
+    @action isLoggedIn() {
         // return process.env.NODE_ENV === 'development' ? true : this.accessToken;
         // return this.accessToken;
-        return sessionStorage.getItem('isLoggedIn') === 'true';
+        if (sessionStorage.getItem('isLoggedIn') === 'true') {
+            this.userProfile = JSON.parse(sessionStorage.getItem('userProfile'));
+            if (this.userProfile) {
+                this.userName = this.userProfile.given_name;
+                this.userAvatar = this.userProfile.picture;
+            }
+            return true;
+        }
+        return false;
     }
 
     getProfile(callBack) {
         this.auth0.client.userInfo(this.accessToken, (err, profile) => {
             if (profile) {
                 this.userProfile = profile;
+                this.userName = profile.given_name;
+                this.userAvatar = profile.picture;
+                sessionStorage.setItem('userProfile', JSON.stringify(profile));
                 Logger.of('getProfile').trace('result:', profile);
             }
             callBack(err, profile);

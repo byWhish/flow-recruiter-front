@@ -6,6 +6,7 @@ import { AutocompleteMaterial, ButtonMaterial, PillList } from '../components/ui
 import {CONFIRMED, DONE, LOADING} from '../context/config';
 import FilterService from '../Services/FiltersService';
 import { CandidateService } from '../Services/CandidateService';
+import Typography from "@material-ui/core/Typography";
 
 const columns = [
     {
@@ -101,6 +102,7 @@ const Candidates = ({ match, onUpdateProject, setLoading, fetchCandidates, filte
 
     return (
         <div className={styles.candidates}>
+            <Typography style={{ fontSize: '2rem' }}>Lista de candidatos</Typography>
             <div className={styles.filtersWrapper}>
                 <AutocompleteMaterial options={filters} handleChange={handleFilterChange} value={filter} label="Selecciona filtro" />
                 <AutocompleteMaterial options={options} handleChange={handleOptionChange} value={option} label="Selecciona opcion" />

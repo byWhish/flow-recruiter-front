@@ -4,6 +4,7 @@ import { ButtonMaterial, InputMaterial } from '../components/uikit/UIkit';
 import { ProjectService } from '../Services/ProjectService';
 import useValidate, { empty, minStrLength } from '../context/validate';
 import { DONE, LOADING } from '../context/config';
+import Typography from "@material-ui/core/Typography";
 
 const reducer = (state, action) => {
     switch (action.type) {
@@ -17,6 +18,7 @@ const reducer = (state, action) => {
 };
 
 const initialState = {
+    subject: '',
     title: '',
     message: '',
     label: '',
@@ -57,6 +59,8 @@ const Mail = ({ match, onUpdateProject, setLoading, edit, project, setNextTab, h
 
     return (
         <div className={styles.mailWrapper}>
+            <Typography style={{ fontSize: '2rem' }}>Datos de Email</Typography>
+            <InputMaterial label="Asunto" onChange={handleChange} value={mail.subject} field="subject" id="subject" error={errors.subject} disabled={disabled} />
             <InputMaterial label="Titulo" onChange={handleChange} value={mail.title} field="title" id="title" error={errors.title} disabled={disabled} />
             <InputMaterial label="Mensaje" onChange={handleChange} value={mail.message} field="message" id="message" multiline error={errors.message} disabled={disabled} />
             <InputMaterial label="Texto link" onChange={handleChange} value={mail.label} field="label" id="label" error={errors.label} disabled={disabled} />

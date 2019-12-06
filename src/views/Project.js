@@ -8,6 +8,7 @@ import history from '../context/History';
 import useValidate, { empty, minArrayLength, minDate, minStrLength } from '../context/validate';
 import { ProjectService } from '../Services/ProjectService';
 import {CONFIRMED, DONE, LOADING} from '../context/config';
+import Typography from "@material-ui/core/Typography";
 
 const initialState = {
     name: '',
@@ -145,6 +146,7 @@ const Project = ({ onUpdateProject, setLoading, edit, project, setNextTab, histo
     return (
         <div className={styles.project}>
             <div className={styles.formWrapper}>
+                <Typography style={{ fontSize: '2rem' }}>Informacion del proyecto</Typography>
                 <InputMaterial
                     value={state.name}
                     label="Titulo"

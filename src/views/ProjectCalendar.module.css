@@ -1,7 +1,9 @@
 .calendar {
-    justify-content: center;
     align-items: center;
     width: 800px;
     overflow-y: auto;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
 }
